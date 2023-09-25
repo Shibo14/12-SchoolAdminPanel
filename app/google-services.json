@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "830741239122",
+    "project_id": "school-admin-panel-ca8b0",
+    "storage_bucket": "school-admin-panel-ca8b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830741239122:android:83c1617357c6e271bfd68b",
+        "android_client_info": {
+          "package_name": "uz.abboskhan.a12_schooladminpanel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxZW0ck5rPOG3_fPyr3-WP5_uGrnZrhco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
