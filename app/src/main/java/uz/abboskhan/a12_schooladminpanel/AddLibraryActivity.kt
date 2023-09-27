@@ -26,123 +26,118 @@ class AddLibraryActivity : AppCompatActivity() {
     private val firebaseData = FirebaseDatabase.getInstance().getReference("Books")
     private lateinit var binding: ActivityAddLibraryBinding
     private var pdfUri: Uri? = null
-    private lateinit var imgPdfBtn: ImageView
-    lateinit var dialogTitle: EditText
-    lateinit var dialogDescription: EditText
-    lateinit var dialogCategory: EditText
 
-    private var uploadPdfDocument: String? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddLibraryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.addLibrary.setOnClickListener {
-          uploadFireBaseData()
+        binding.btnSavePdf.setOnClickListener {
+            uploadFireBaseData()
+
+        }
+        binding.addPdfLibrary.setOnClickListener {
+            pdfAdd()
         }
 
 
     }
-
 
 
     @SuppressLint("MissingInflatedId")
     private fun uploadFireBaseData() {
 
-        val editDialog = androidx.appcompat.app.AlertDialog.Builder(this)
-        val editDialogView = layoutInflater.inflate(R.layout.dialog_add_class_table, null)
+        val title = binding.dialogTextTitle.text.toString().trim()
+        val description = binding.dialogTextDesc.text.toString().trim()
+        val category = binding.dialogTextCategory.text.toString().trim()
+        val timestamp = System.currentTimeMillis()
+        val id = timestamp.toString()
+        if (validateForm(title, description, category) && pdfUri != null) {
 
-        dialogTitle = editDialogView.findViewById<EditText>(R.id.dialog_textTitle)
-        dialogDescription = editDialogView.findViewById<EditText>(R.id.dialog_textDesc)
-        dialogCategory = editDialogView.findViewById<EditText>(R.id.dialog_textCategory)
-        imgPdfBtn = editDialogView.findViewById(R.id.addPdfLibrary)
+            val fileName = "Books/$timestamp"
+            val sRef = FirebaseStorage.getInstance().getReference(fileName)
+            val imageRef = sRef.child("${System.currentTimeMillis()}.pdf")
 
-        imgPdfBtn.setOnClickListener {
-            pdfAdd()
-        }
+            pdfUri?.let {
+                imageRef.putFile(it)
+                    .addOnSuccessListener { _ ->
+                        imageRef.downloadUrl.addOnSuccessListener { uri ->
+                            val urlPdf = uri.toString()
 
+                            saveDataToDatabase(
+                                urlPdf,
+                                id,
+                                title,
+                                description,
+                                category,
+                                timestamp
+                            )
+                            startActivity(Intent(this, LibraryActivity::class.java))
+                            finish()
+                            Toast.makeText(this, "Teacher data save", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        // Rasmni yuklashda xatolik yuz berdi
+                        Toast.makeText(this, "Teacher data error ${e.message}", Toast.LENGTH_SHORT)
+                            .show()
 
-
-        editDialog.setView(editDialogView)
-        editDialog.setPositiveButton("Saqlash") { _, _ ->
-            val title = dialogTitle.text.toString().trim()
-            val description = dialogDescription.text.toString().trim()
-            val category = dialogCategory.text.toString().trim()
-            val  timestamp = System.currentTimeMillis()
-            if (validateForm(title, description, category) && pdfUri != null) {
-
-
-                val fileName = "Books/$timestamp"
-                val sRef = FirebaseStorage.getInstance().getReference(fileName)
-                sRef.putFile(pdfUri!!).addOnSuccessListener { taskUri ->
-                    val uriTask: Task<Uri> = taskUri.storage.downloadUrl
-                    while (!uriTask.isSuccessful) {
-                      uploadPdfDocument = "${uriTask.result}"
 
                     }
 
-                }.addOnFailureListener { e ->
-                    Toast.makeText(this, "upload pdf ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-
-
-                val hashMap = HashMap<String, Any>()
-                hashMap["id"] = "$timestamp"
-                hashMap["title"] = "$title"
-                hashMap["description"] = "$description"
-                hashMap["category"] = "$category"
-                hashMap["pdfUri"] = "$uploadPdfDocument"
-                hashMap["timestamp"] = timestamp
-
-
-
-                firebaseData.child("$timestamp").setValue(hashMap).addOnSuccessListener {
-
-                    Toast.makeText(this, "Malumotlar qo'shildi.", Toast.LENGTH_SHORT).show()
-
-                }.addOnFailureListener {
-
-                    Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
-                }
 
             }
 
 
         }
-        editDialog.setNegativeButton("Bekor qilish") { _, _ ->
-
-        }
-
-        val dialog = editDialog.create()
-        dialog.show()
 
 
     }
 
+    private fun saveDataToDatabase(
+        urlPdf: String,
+        id: String,
+        title: String,
+        description: String,
+        category: String,
+        timestamp: Long
+    ) {
+        val key = firebaseData.push().key
+
+        if (key != null) {
+            val data =
+                LibraryData(id, title, description, category, timestamp, urlPdf)
+            firebaseData.child(key).setValue(data)
+
+        }
+
+    }
+
+
     private fun validateForm(title: String, description: String, category: String): Boolean {
         return when {
             TextUtils.isEmpty(title) && !Patterns.EMAIL_ADDRESS.matcher(title).matches() -> {
-                dialogTitle.error = "Kitob nomini kiriting"
+                binding.dialogTextTitle.error = "Kitob nomini kiriting"
                 false
             }
 
             TextUtils.isEmpty(description) -> {
-                dialogDescription.error = "Kitob haqida ma'lumot kiriting"
+                binding.dialogTextDesc.error = "Kitob haqida ma'lumot kiriting"
 
                 false
             }
 
             TextUtils.isEmpty(category) -> {
-                dialogCategory.error = "Kitob toifasini kiriting"
+                binding.dialogTextCategory.error = "Kitob toifasini kiriting"
 
                 false
             }
 
             else -> {
-                dialogTitle.error = null
-                dialogDescription.error = null
-                dialogCategory.error = null
+                binding.dialogTextTitle.error = null
+                binding.dialogTextDesc.error = null
+                binding.dialogTextCategory.error = null
                 true
             }
         }

@@ -13,6 +13,9 @@
         android:theme="@style/Theme._12schoolAdminPanel"
         tools:targetApi="31">
         <activity
+            android:name=".LibraryActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditTableActivity"
             android:exported="false" />
         <activity

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.library.setOnClickListener {
 
-            startActivity(Intent(this, AddLibraryActivity::class.java))
+            startActivity(Intent(this, LibraryActivity::class.java))
 
         }
 
