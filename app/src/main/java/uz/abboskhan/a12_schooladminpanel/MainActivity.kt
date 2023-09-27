@@ -12,14 +12,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.classInfo.setOnClickListener {
-            startActivity(Intent(this,AddClassActivity::class.java))
+
+            startActivity(Intent(this, AddClassActivity::class.java))
         }
-         binding.teacher.setOnClickListener {
-            startActivity(Intent(this,AddTechActivity::class.java))
+        binding.teacher.setOnClickListener {
+
+            startActivity(Intent(this, AddTechActivity::class.java))
+
         }
- binding.library.setOnClickListener {
-            startActivity(Intent(this,AddTechActivity::class.java))
+        binding.library.setOnClickListener {
+
+            startActivity(Intent(this, AddLibraryActivity::class.java))
+
         }
+
+
 
     }
 }
