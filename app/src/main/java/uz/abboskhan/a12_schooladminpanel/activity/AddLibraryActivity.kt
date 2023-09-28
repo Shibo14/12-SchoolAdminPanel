@@ -1,26 +1,19 @@
-package uz.abboskhan.a12_schooladminpanel
+package uz.abboskhan.a12_schooladminpanel.activity
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.Instrumentation.ActivityResult
-import android.content.ClipDescription
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.gms.tasks.Task
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import uz.abboskhan.a12_schooladminpanel.model.LibraryData
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityAddLibraryBinding
-import uz.abboskhan.a12_schooladminpanel.databinding.ActivityClassTableBinding
 
 class AddLibraryActivity : AppCompatActivity() {
     private val firebaseData = FirebaseDatabase.getInstance().getReference("Books")

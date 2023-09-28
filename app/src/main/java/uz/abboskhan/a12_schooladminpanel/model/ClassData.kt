@@ -1,4 +1,4 @@
-package uz.abboskhan.a12_schooladminpanel
+package uz.abboskhan.a12_schooladminpanel.model
 
 class ClassData {
     var id: String = ""

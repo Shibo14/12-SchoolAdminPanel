@@ -1,17 +1,15 @@
-package uz.abboskhan.a12_schooladminpanel
+package uz.abboskhan.a12_schooladminpanel.activity
 
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import uz.abboskhan.a12_schooladminpanel.model.ClassData
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityAddTableBinding
-import uz.abboskhan.a12_schooladminpanel.databinding.ActivityClassTableBinding
 
 class AddTableActivity : AppCompatActivity() {
     private val firebaseData = FirebaseDatabase.getInstance().getReference("Table")

@@ -1,4 +1,4 @@
-package uz.abboskhan.a12_schooladminpanel
+package uz.abboskhan.a12_schooladminpanel.activity
 
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import uz.abboskhan.a12_schooladminpanel.R
+import uz.abboskhan.a12_schooladminpanel.model.TeacherData
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityAddTechBinding
 
 class AddTechActivity : AppCompatActivity() {

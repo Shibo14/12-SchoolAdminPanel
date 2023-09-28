@@ -1,4 +1,4 @@
-package uz.abboskhan.a12_schooladminpanel
+package uz.abboskhan.a12_schooladminpanel.adapter
 
 import android.app.AlertDialog
 import android.content.Context
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
+import uz.abboskhan.a12_schooladminpanel.model.ClassData
+import uz.abboskhan.a12_schooladminpanel.activity.ClassTableActivity
 import uz.abboskhan.a12_schooladminpanel.databinding.RewItemClassBinding
 
 class ClassAdapter

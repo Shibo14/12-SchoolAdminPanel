@@ -1,18 +1,17 @@
-package uz.abboskhan.a12_schooladminpanel
+package uz.abboskhan.a12_schooladminpanel.activity
 
-import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import uz.abboskhan.a12_schooladminpanel.adapter.TableAdapter
+import uz.abboskhan.a12_schooladminpanel.model.TableData
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityClassTableBinding
 
 class ClassTableActivity : AppCompatActivity() {

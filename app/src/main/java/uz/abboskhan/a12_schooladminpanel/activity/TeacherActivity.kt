@@ -1,4 +1,4 @@
-package uz.abboskhan.a12_schooladminpanel
+package uz.abboskhan.a12_schooladminpanel.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -9,6 +9,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import uz.abboskhan.a12_schooladminpanel.R
+import uz.abboskhan.a12_schooladminpanel.adapter.TeacherAdapter
+import uz.abboskhan.a12_schooladminpanel.model.TeacherData
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityTeacherBinding
 
 class TeacherActivity : AppCompatActivity() {

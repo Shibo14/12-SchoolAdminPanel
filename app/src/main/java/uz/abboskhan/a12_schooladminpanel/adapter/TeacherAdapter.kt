@@ -1,14 +1,14 @@
-package uz.abboskhan.a12_schooladminpanel
+package uz.abboskhan.a12_schooladminpanel.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import uz.abboskhan.a12_schooladminpanel.model.TeacherData
 import uz.abboskhan.a12_schooladminpanel.databinding.RewTeacherBinding
 
-class TeacherAdapter(private val mList: List<TeacherData>,val context: Context): RecyclerView.Adapter<TeacherAdapter.TechViewHolder>() {
+class TeacherAdapter(private val mList: List<TeacherData>, val context: Context): RecyclerView.Adapter<TeacherAdapter.TechViewHolder>() {
 
     inner class TechViewHolder(private var binding:RewTeacherBinding) :
         RecyclerView.ViewHolder(binding.root) {

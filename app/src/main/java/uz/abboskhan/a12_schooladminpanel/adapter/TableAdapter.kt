@@ -1,4 +1,4 @@
-package uz.abboskhan.a12_schooladminpanel
+package uz.abboskhan.a12_schooladminpanel.adapter
 
 import android.app.AlertDialog
 import android.content.Context
@@ -13,7 +13,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import uz.abboskhan.a12_schooladminpanel.databinding.RewItemClassBinding
+import uz.abboskhan.a12_schooladminpanel.model.TableData
+import uz.abboskhan.a12_schooladminpanel.activity.EditTableActivity
 import uz.abboskhan.a12_schooladminpanel.databinding.RewTebleClassBinding
 
 class TableAdapter
@@ -99,7 +100,7 @@ class TableAdapter
 
     }
 
-    private fun moreDialog(holder: TableAdapter.TableViewHolder, currentItem: TableData) {
+    private fun moreDialog(holder: TableViewHolder, currentItem: TableData) {
         val classId = currentItem.id
         val classCategory = currentItem.classId
 
