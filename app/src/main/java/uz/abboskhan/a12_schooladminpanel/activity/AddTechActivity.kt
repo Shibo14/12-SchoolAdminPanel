@@ -22,7 +22,8 @@ class AddTechActivity : AppCompatActivity() {
     private var imageUri: Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_tech)
+        binding = ActivityAddTechBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.addTechBtn.setOnClickListener {
             getTechData()
@@ -33,6 +34,7 @@ class AddTechActivity : AppCompatActivity() {
 
 
     }
+
     private fun getTechData() {
         val techName = binding.addTechName.text.toString()
         val techSuraName = binding.addTechNameLas.text.toString()
@@ -61,7 +63,8 @@ class AddTechActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener { e ->
                     // Rasmni yuklashda xatolik yuz berdi
-                    Toast.makeText(this, "Teacher data error ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Teacher data error ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
 
 
                 }

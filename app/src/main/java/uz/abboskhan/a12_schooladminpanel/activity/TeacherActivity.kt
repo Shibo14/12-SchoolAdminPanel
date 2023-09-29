@@ -20,7 +20,8 @@ class TeacherActivity : AppCompatActivity() {
     private lateinit var mList: ArrayList<TeacherData>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_teacher)
+        binding = ActivityTeacherBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         mList = ArrayList()
 
 
@@ -34,7 +35,7 @@ class TeacherActivity : AppCompatActivity() {
 
     private fun getRewData() {
         mList = ArrayList()
-        val firebaseData = FirebaseDatabase.getInstance().getReference("Teacher")
+        val firebaseData = FirebaseDatabase.getInstance().getReference("TeacherData")
         firebaseData.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {

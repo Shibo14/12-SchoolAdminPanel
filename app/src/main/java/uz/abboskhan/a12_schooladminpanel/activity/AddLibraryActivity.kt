@@ -43,10 +43,10 @@ class AddLibraryActivity : AppCompatActivity() {
 
         val title = binding.dialogTextTitle.text.toString().trim()
         val description = binding.dialogTextDesc.text.toString().trim()
-        val category = binding.dialogTextCategory.text.toString().trim()
+
         val timestamp = System.currentTimeMillis()
         val id = timestamp.toString()
-        if (validateForm(title, description, category) && pdfUri != null) {
+        if (validateForm(title, description) && pdfUri != null) {
 
             val fileName = "Books/$timestamp"
             val sRef = FirebaseStorage.getInstance().getReference(fileName)
@@ -63,7 +63,6 @@ class AddLibraryActivity : AppCompatActivity() {
                                 id,
                                 title,
                                 description,
-                                category,
                                 timestamp
                             )
                             startActivity(Intent(this, LibraryActivity::class.java))
@@ -93,14 +92,14 @@ class AddLibraryActivity : AppCompatActivity() {
         id: String,
         title: String,
         description: String,
-        category: String,
+
         timestamp: Long
     ) {
         val key = firebaseData.push().key
 
         if (key != null) {
             val data =
-                LibraryData(id, title, description, category, timestamp, urlPdf)
+                LibraryData(id, title, description,  timestamp, urlPdf)
             firebaseData.child(key).setValue(data)
 
         }
@@ -108,7 +107,7 @@ class AddLibraryActivity : AppCompatActivity() {
     }
 
 
-    private fun validateForm(title: String, description: String, category: String): Boolean {
+    private fun validateForm(title: String, description: String,): Boolean {
         return when {
             TextUtils.isEmpty(title) && !Patterns.EMAIL_ADDRESS.matcher(title).matches() -> {
                 binding.dialogTextTitle.error = "Kitob nomini kiriting"
@@ -121,16 +120,12 @@ class AddLibraryActivity : AppCompatActivity() {
                 false
             }
 
-            TextUtils.isEmpty(category) -> {
-                binding.dialogTextCategory.error = "Kitob toifasini kiriting"
 
-                false
-            }
 
             else -> {
                 binding.dialogTextTitle.error = null
                 binding.dialogTextDesc.error = null
-                binding.dialogTextCategory.error = null
+
                 true
             }
         }

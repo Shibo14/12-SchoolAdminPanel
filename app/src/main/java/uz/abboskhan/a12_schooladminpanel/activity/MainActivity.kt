@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.teacher.setOnClickListener {
 
-            startActivity(Intent(this, AddTechActivity::class.java))
+            startActivity(Intent(this, TeacherActivity::class.java))
 
         }
         binding.library.setOnClickListener {
