@@ -10,6 +10,7 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import uz.abboskhan.a12_schooladminpanel.model.LibraryData
@@ -52,34 +53,25 @@ class AddLibraryActivity : AppCompatActivity() {
             val sRef = FirebaseStorage.getInstance().getReference(fileName)
             val imageRef = sRef.child("${System.currentTimeMillis()}.pdf")
 
-            pdfUri?.let {
-                imageRef.putFile(it)
-                    .addOnSuccessListener { _ ->
-                        imageRef.downloadUrl.addOnSuccessListener { uri ->
-                            val urlPdf = uri.toString()
+            sRef.putFile(pdfUri!!)
+                .addOnSuccessListener { ts ->
+                    val uriTask: Task<Uri> = ts.storage.downloadUrl
+                    while (!uriTask.isSuccessful);
+                    val urlPdf = "${uriTask.result}"
 
-                            saveDataToDatabase(
-                                urlPdf,
-                                id,
-                                title,
-                                description,
-                                timestamp
-                            )
-                            startActivity(Intent(this, LibraryActivity::class.java))
-                            finish()
-                            Toast.makeText(this, "Teacher data save", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    .addOnFailureListener { e ->
-                        // Rasmni yuklashda xatolik yuz berdi
-                        Toast.makeText(this, "Teacher data error ${e.message}", Toast.LENGTH_SHORT)
-                            .show()
+                    saveDataToDatabase(
+                        urlPdf,
+                        id,
+                        title,
+                        description,
+                        timestamp
+                    )
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "pdf upload error", Toast.LENGTH_SHORT).show()
+                }
 
 
-                    }
-
-
-            }
 
 
         }
@@ -99,7 +91,7 @@ class AddLibraryActivity : AppCompatActivity() {
 
         if (key != null) {
             val data =
-                LibraryData(id, title, description,  timestamp, urlPdf)
+                LibraryData(id, title, description, timestamp, urlPdf)
             firebaseData.child(key).setValue(data)
 
         }
@@ -107,7 +99,7 @@ class AddLibraryActivity : AppCompatActivity() {
     }
 
 
-    private fun validateForm(title: String, description: String,): Boolean {
+    private fun validateForm(title: String, description: String): Boolean {
         return when {
             TextUtils.isEmpty(title) && !Patterns.EMAIL_ADDRESS.matcher(title).matches() -> {
                 binding.dialogTextTitle.error = "Kitob nomini kiriting"
@@ -119,7 +111,6 @@ class AddLibraryActivity : AppCompatActivity() {
 
                 false
             }
-
 
 
             else -> {

@@ -1,6 +1,7 @@
 package uz.abboskhan.a12_schooladminpanel.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.github.barteksc.pdfviewer.PDFView
 import com.google.firebase.storage.FirebaseStorage
+import uz.abboskhan.a12_schooladminpanel.activity.ClassTableActivity
+import uz.abboskhan.a12_schooladminpanel.activity.ReadBookActivity
 import uz.abboskhan.a12_schooladminpanel.databinding.RewLibraryBinding
 import uz.abboskhan.a12_schooladminpanel.filter.FilterLibrary
 import uz.abboskhan.a12_schooladminpanel.model.LibraryData
@@ -56,6 +59,18 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
         holder.title.text = title
         holder.description.text = description
         loadLibraryData(null, holder.pdfView, urlPdf, title, description, holder.progressBar)
+
+
+
+            holder.itemView.setOnClickListener {
+                val i = Intent(c, ReadBookActivity::class.java)
+                i.putExtra("id",id)
+
+                c.startActivity(i)
+
+            }
+
+
 
     }
 
