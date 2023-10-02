@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="16dp"
-
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,6 +38,8 @@
                 android:id="@+id/loadPdf"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true"
                 app:layout_constraintBottom_toBottomOf="@+id/pdfView"
                 app:layout_constraintEnd_toEndOf="@+id/pdfView"
                 app:layout_constraintStart_toStartOf="@+id/pdfView"

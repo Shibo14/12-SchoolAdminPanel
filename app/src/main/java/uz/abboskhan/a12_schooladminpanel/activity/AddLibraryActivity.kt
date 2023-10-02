@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
@@ -30,6 +31,7 @@ class AddLibraryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnSavePdf.setOnClickListener {
+
             uploadFireBaseData()
 
         }
@@ -43,7 +45,7 @@ class AddLibraryActivity : AppCompatActivity() {
 
     @SuppressLint("MissingInflatedId")
     private fun uploadFireBaseData() {
-
+     binding.prgAddLibrary.visibility = View.VISIBLE
         titleBook = binding.dialogTextTitle.text.toString().trim()
         description = binding.dialogTextDesc.text.toString().trim()
 
@@ -60,9 +62,12 @@ class AddLibraryActivity : AppCompatActivity() {
                     while (!uriTask.isSuccessful);
                     val uploadPdfUri = "${uriTask.result}"
                     saveDataToDatabase(uploadPdfUri, timestamp, id)
+                    binding.prgAddLibrary.visibility = View.GONE
                     Toast.makeText(this, "pdf upload successful", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
+                    binding.prgAddLibrary.visibility = View.GONE
+
                     // Rasmni yuklashda xatolik yuz berdi
                     Toast.makeText(this, "Book ${e.message}", Toast.LENGTH_SHORT)
                         .show()

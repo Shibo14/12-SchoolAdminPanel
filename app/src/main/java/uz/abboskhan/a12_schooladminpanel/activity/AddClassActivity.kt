@@ -89,6 +89,7 @@ class AddClassActivity : AppCompatActivity() {
     }
 
     private fun dialogData() {
+
         val editDialog = AlertDialog.Builder(this)
         val editDialogView = layoutInflater.inflate(R.layout.dialog_edd, null)
 

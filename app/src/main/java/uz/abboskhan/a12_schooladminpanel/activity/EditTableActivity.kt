@@ -31,6 +31,7 @@ class EditTableActivity : AppCompatActivity() {
         binding.EdtTableSave.setOnClickListener {
             getEditData()
         }
+
     }
 
     private fun loadInfo() {

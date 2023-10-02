@@ -23,6 +23,8 @@
         android:visibility="gone"
         android:id="@+id/prgReadBook"
         android:layout_width="150dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
         android:layout_height="150dp"
         app:layout_constraintBottom_toBottomOf="@+id/pdfRead"
         app:layout_constraintEnd_toEndOf="parent"
