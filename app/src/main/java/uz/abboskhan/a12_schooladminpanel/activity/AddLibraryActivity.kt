@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,10 +18,11 @@ import uz.abboskhan.a12_schooladminpanel.model.LibraryData
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityAddLibraryBinding
 
 class AddLibraryActivity : AppCompatActivity() {
-    private val firebaseData = FirebaseDatabase.getInstance().getReference("Books")
+    private val firebaseData = FirebaseDatabase.getInstance().getReference("BooksData")
     private lateinit var binding: ActivityAddLibraryBinding
     private var pdfUri: Uri? = null
-
+    private lateinit var titleBook: String
+    private lateinit var description: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,36 +44,30 @@ class AddLibraryActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     private fun uploadFireBaseData() {
 
-        val title = binding.dialogTextTitle.text.toString().trim()
-        val description = binding.dialogTextDesc.text.toString().trim()
+        titleBook = binding.dialogTextTitle.text.toString().trim()
+        description = binding.dialogTextDesc.text.toString().trim()
 
         val timestamp = System.currentTimeMillis()
         val id = timestamp.toString()
-        if (validateForm(title, description) && pdfUri != null) {
+        if (validateForm(titleBook, description) && pdfUri != null) {
 
-            val fileName = "Books/$timestamp"
+            val fileName = "BooksPdf/$timestamp"
             val sRef = FirebaseStorage.getInstance().getReference(fileName)
-            val imageRef = sRef.child("${System.currentTimeMillis()}.pdf")
 
             sRef.putFile(pdfUri!!)
-                .addOnSuccessListener { ts ->
-                    val uriTask: Task<Uri> = ts.storage.downloadUrl
+                .addOnSuccessListener { thk ->
+                    val uriTask: Task<Uri> = thk.storage.downloadUrl
                     while (!uriTask.isSuccessful);
-                    val urlPdf = "${uriTask.result}"
-
-                    saveDataToDatabase(
-                        urlPdf,
-                        id,
-                        title,
-                        description,
-                        timestamp
-                    )
+                    val uploadPdfUri = "${uriTask.result}"
+                    saveDataToDatabase(uploadPdfUri, timestamp, id)
+                    Toast.makeText(this, "pdf upload successful", Toast.LENGTH_SHORT).show()
                 }
-                .addOnFailureListener {
-                    Toast.makeText(this, "pdf upload error", Toast.LENGTH_SHORT).show()
+                .addOnFailureListener { e ->
+                    // Rasmni yuklashda xatolik yuz berdi
+                    Toast.makeText(this, "Book ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
+
                 }
-
-
 
 
         }
@@ -79,22 +75,25 @@ class AddLibraryActivity : AppCompatActivity() {
 
     }
 
-    private fun saveDataToDatabase(
-        urlPdf: String,
-        id: String,
-        title: String,
-        description: String,
+    private fun saveDataToDatabase(uploadPdfUri: String, timestamp: Long, id: String) {
 
-        timestamp: Long
-    ) {
-        val key = firebaseData.push().key
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap["id"] = id
+        hashMap["title"] = "$titleBook"
+        hashMap["urlPdf"] = "$uploadPdfUri"
+        hashMap["description"] = "$description"
+        hashMap["timestamp"] = timestamp
 
-        if (key != null) {
-            val data =
-                LibraryData(id, title, description, timestamp, urlPdf)
-            firebaseData.child(key).setValue(data)
+        firebaseData.child("$titleBook")
+            .setValue(hashMap)
+            .addOnSuccessListener {
+                Toast.makeText(this, "pdf data upload successful", Toast.LENGTH_SHORT).show()
+                pdfUri = null
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "pdf data upload error", Toast.LENGTH_SHORT).show()
 
-        }
+            }
 
     }
 

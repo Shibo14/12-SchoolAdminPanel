@@ -65,6 +65,7 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
             holder.itemView.setOnClickListener {
                 val i = Intent(c, ReadBookActivity::class.java)
                 i.putExtra("id",id)
+                i.putExtra("title",title)
 
                 c.startActivity(i)
 

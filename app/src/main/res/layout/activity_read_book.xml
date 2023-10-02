@@ -7,7 +7,7 @@
     tools:context=".activity.ReadBookActivity">
 
     <com.github.barteksc.pdfviewer.PDFView
-        android:id="@+id/readBook"
+        android:id="@+id/pdfRead"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,16 +20,15 @@
     </com.github.barteksc.pdfviewer.PDFView>
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/readPrg"
+        android:visibility="gone"
+        android:id="@+id/prgReadBook"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-  android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/pdfRead"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/readBook"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_rawRes="@raw/animation_prg">
+        app:layout_constraintStart_toStartOf="@+id/pdfRead"
+        app:layout_constraintTop_toTopOf="@+id/pdfRead"
+        app:lottie_rawRes="@raw/prganim">
 
     </com.airbnb.lottie.LottieAnimationView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

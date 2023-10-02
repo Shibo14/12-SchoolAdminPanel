@@ -11,29 +11,37 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import uz.abboskhan.a12_schooladminpanel.R
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityReadBookBinding
+import uz.abboskhan.a12_schooladminpanel.model.LibraryData
 
 class ReadBookActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReadBookBinding
-    private val firebaseData = FirebaseDatabase.getInstance().getReference("Books")
 
-    var id = ""
+    var id =""
+    var title =""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReadBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        id = intent.getStringExtra("id")!!
+        id =intent.getStringExtra("id")!!
+        title =intent.getStringExtra("title")!!
 
         loadReadData()
 
     }
 
     private fun loadReadData() {
-        firebaseData.child(id)
+        val firebaseData = FirebaseDatabase.getInstance().getReference("BooksData")
+
+        firebaseData.child(title)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val pdfUri = snapshot.child("urlPdf").value
-                    loadBookData("$pdfUri")
+                    println("Id= $title")
+                    val urlPdf = snapshot.child("urlPdf").value.toString()
+                    println("Pdf= $urlPdf")
+
+                        loadBookData("$urlPdf")
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -44,16 +52,22 @@ class ReadBookActivity : AppCompatActivity() {
 
     }
 
-    private fun loadBookData(pdfUri: String) {
-        binding.readPrg.visibility = View.VISIBLE
-        val ref = FirebaseStorage.getInstance().getReferenceFromUrl(pdfUri)
-        ref.getBytes(Constants.MAX_PDF_SIZE)
+    private fun loadBookData(urlPdf: String) {
+        binding.prgReadBook.visibility = View.VISIBLE
+//        val ref = FirebaseStorage.getInstance().getReferenceFromUrl(urlPdf)
+        val storage = FirebaseStorage.getInstance()  //getReferenceFromUrl
+        val reference = storage.getReferenceFromUrl(urlPdf)
+        reference.getBytes(Constants.MAX_PDF_SIZE)
             .addOnSuccessListener { byt ->
 
-                binding.readBook.fromBytes(byt)
-                    .swipeHorizontal(false)
+                binding.pdfRead.fromBytes(byt)
+                    .swipeHorizontal(true)
+                    .onError { e->
+                        Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+
+                    }
                     .load()
-                binding.readPrg.visibility = View.GONE
+                binding.prgReadBook.visibility = View.GONE
 
             }
             .addOnFailureListener {

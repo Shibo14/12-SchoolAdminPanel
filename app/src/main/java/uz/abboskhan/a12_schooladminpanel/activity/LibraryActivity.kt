@@ -21,7 +21,7 @@ import uz.abboskhan.a12_schooladminpanel.model.LibraryData
 import uz.abboskhan.a12_schooladminpanel.model.TeacherData
 
 class LibraryActivity : AppCompatActivity() {
-    private val firebaseData = FirebaseDatabase.getInstance().getReference("Books")
+    private val firebaseData = FirebaseDatabase.getInstance().getReference("BooksData")
     private lateinit var myAdapter: LibraryAdapter
     private lateinit var mList: ArrayList<LibraryData>
     private lateinit var binding: ActivityLibraryBinding
