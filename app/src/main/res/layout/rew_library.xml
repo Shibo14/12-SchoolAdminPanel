@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.github.barteksc.pdfviewer.PDFView
+            <ImageView
+                android:src="@drawable/library"
                 android:id="@+id/pdfView"
                 android:layout_width="200dp"
                 android:layout_height="250dp"
@@ -34,19 +35,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingClass" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/loadPdf"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                app:lottie_loop="true"
-                app:lottie_autoPlay="true"
-                app:layout_constraintBottom_toBottomOf="@+id/pdfView"
-                app:layout_constraintEnd_toEndOf="@+id/pdfView"
-                app:layout_constraintStart_toStartOf="@+id/pdfView"
-                app:layout_constraintTop_toTopOf="@+id/pdfView"
-                app:lottie_rawRes="@raw/prganim">
-
-            </com.airbnb.lottie.LottieAnimationView>
 
             <TextView
                 android:id="@+id/pdfItm_title"
@@ -80,7 +68,7 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/baseline_more_vert_24" />
+                app:srcCompat="@drawable/baseline_delete_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

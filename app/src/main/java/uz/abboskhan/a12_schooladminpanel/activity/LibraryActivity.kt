@@ -34,25 +34,7 @@ class LibraryActivity : AppCompatActivity() {
         }
          
         getRewDataLibrary()
-        binding.librarySearch.addTextChangedListener(object : TextWatcher {
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                try {
-                    myAdapter.filter.filter(s)
-                    binding.addLibrary.visibility = View.GONE
-                } catch (e: Exception) {
-                    Toast.makeText(this@LibraryActivity, "${e.message}", Toast.LENGTH_SHORT).show()
-                }
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
     }
 
 
@@ -60,13 +42,14 @@ class LibraryActivity : AppCompatActivity() {
         mList = ArrayList()
 
         firebaseData.addValueEventListener(object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
+
             override fun onDataChange(snapshot: DataSnapshot) {
                 mList.clear()
                 for (i in snapshot.children) {
                     val data = i.getValue(LibraryData::class.java)
                     mList.add(data!!)
                 }
+
                 myAdapter = LibraryAdapter(mList, this@LibraryActivity)
                 binding.rewClassLibrary.setHasFixedSize(true)
                 binding.rewClassLibrary.layoutManager = LinearLayoutManager(this@LibraryActivity)

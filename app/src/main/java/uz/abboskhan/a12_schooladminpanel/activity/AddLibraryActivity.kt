@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.TextView
@@ -15,8 +16,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import uz.abboskhan.a12_schooladminpanel.model.LibraryData
+import com.google.firebase.storage.StorageReference
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityAddLibraryBinding
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
 
 class AddLibraryActivity : AppCompatActivity() {
     private val firebaseData = FirebaseDatabase.getInstance().getReference("BooksData")
@@ -24,7 +28,9 @@ class AddLibraryActivity : AppCompatActivity() {
     private var pdfUri: Uri? = null
     private lateinit var titleBook: String
     private lateinit var description: String
-
+    private var imageUri: Uri? = null
+    private var uploadPdfUri = ""
+    private var imageUrlPdf = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddLibraryBinding.inflate(layoutInflater)
@@ -35,8 +41,13 @@ class AddLibraryActivity : AppCompatActivity() {
             uploadFireBaseData()
 
         }
+        binding.addPdfImg.setOnClickListener {
+            resultLauncher.launch("image/*")
+        }
+
         binding.addPdfLibrary.setOnClickListener {
             pdfAdd()
+
         }
 
 
@@ -47,11 +58,11 @@ class AddLibraryActivity : AppCompatActivity() {
     private fun uploadFireBaseData() {
      binding.prgAddLibrary.visibility = View.VISIBLE
         titleBook = binding.dialogTextTitle.text.toString().trim()
-        description = binding.dialogTextDesc.text.toString().trim()
+
 
         val timestamp = System.currentTimeMillis()
         val id = timestamp.toString()
-        if (validateForm(titleBook, description) && pdfUri != null) {
+        if (validateForm(titleBook) && pdfUri != null) {
 
             val fileName = "BooksPdf/$timestamp"
             val sRef = FirebaseStorage.getInstance().getReference(fileName)
@@ -60,8 +71,34 @@ class AddLibraryActivity : AppCompatActivity() {
                 .addOnSuccessListener { thk ->
                     val uriTask: Task<Uri> = thk.storage.downloadUrl
                     while (!uriTask.isSuccessful);
-                    val uploadPdfUri = "${uriTask.result}"
-                    saveDataToDatabase(uploadPdfUri, timestamp, id)
+                    uploadPdfUri = "${uriTask.result}"
+                    val storageReference: StorageReference =
+                        FirebaseStorage.getInstance().getReference("BookImages")
+
+                    val imageRef = storageReference.child("${System.currentTimeMillis()}.jpg")
+
+                    imageUri?.let {
+                        imageRef.putFile(it)
+                            .addOnSuccessListener { taskSnapshot ->
+                                imageRef.downloadUrl.addOnSuccessListener { uri ->
+                                    imageUrlPdf = uri.toString()
+                                    saveDataToDatabase(uploadPdfUri, timestamp, id,imageUrlPdf)
+                                    onBackPressed()
+                                    Toast.makeText(this, "Teacher data save", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            .addOnFailureListener { e ->
+                                // Rasmni yuklashda xatolik yuz berdi
+                                Toast.makeText(this, "Teacher data error ${e.message}", Toast.LENGTH_SHORT)
+                                    .show()
+
+
+                            }
+
+
+                    }
+
+
                     binding.prgAddLibrary.visibility = View.GONE
                     Toast.makeText(this, "pdf upload successful", Toast.LENGTH_SHORT).show()
                 }
@@ -80,13 +117,23 @@ class AddLibraryActivity : AppCompatActivity() {
 
     }
 
-    private fun saveDataToDatabase(uploadPdfUri: String, timestamp: Long, id: String) {
+
+
+
+
+    private fun saveDataToDatabase(
+        uploadPdfUri: String,
+        timestamp: Long,
+        id: String,
+        imageUrlPdf: String
+    ) {
 
         val hashMap: HashMap<String, Any> = HashMap()
+        println("imageUrlPdf = $imageUrlPdf")
         hashMap["id"] = id
         hashMap["title"] = "$titleBook"
         hashMap["urlPdf"] = "$uploadPdfUri"
-        hashMap["description"] = "$description"
+        hashMap["imageUrlPdf"] = "$imageUrlPdf"
         hashMap["timestamp"] = timestamp
 
         firebaseData.child("$titleBook")
@@ -103,24 +150,18 @@ class AddLibraryActivity : AppCompatActivity() {
     }
 
 
-    private fun validateForm(title: String, description: String): Boolean {
+    private fun validateForm(title: String): Boolean {
         return when {
             TextUtils.isEmpty(title) && !Patterns.EMAIL_ADDRESS.matcher(title).matches() -> {
                 binding.dialogTextTitle.error = "Kitob nomini kiriting"
                 false
             }
 
-            TextUtils.isEmpty(description) -> {
-                binding.dialogTextDesc.error = "Kitob haqida ma'lumot kiriting"
 
-                false
-            }
 
 
             else -> {
                 binding.dialogTextTitle.error = null
-                binding.dialogTextDesc.error = null
-
                 true
             }
         }
@@ -132,8 +173,21 @@ class AddLibraryActivity : AppCompatActivity() {
         i.type = "application/pdf"
         i.action = Intent.ACTION_GET_CONTENT
         pdfActivityResultLauncher.launch(i)
-    }
 
+
+
+
+
+        binding.imgAddPdf.visibility = View.GONE
+    }
+    private val resultLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) {
+
+        imageUri = it
+        binding.addPdfImg.setImageURI(it)
+
+    }
 
     private var pdfActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult(),
@@ -141,11 +195,35 @@ class AddLibraryActivity : AppCompatActivity() {
                 if (result.resultCode == RESULT_OK) {
                     pdfUri = result.data!!.data
 
-                } else {
-                    Toast.makeText(this, "pdf error", Toast.LENGTH_SHORT).show()
-                }
 
-            })
+                    if (pdfUri != null) {
+                        binding.addPdfLibrary.fromUri(pdfUri)
+                            .pages(0)
+                            .spacing(0)
+                            .swipeHorizontal(false)
+                            .enableSwipe(false)
+                            .onError { t ->
+                                // Xatolik yuzaga kelganda ishlatiladigan kod
+                                t.printStackTrace() // Xato haqida ma'lumotni ko'rish uchun
+                                Log.e("onError", "PDF onError: ${t.message}")
+                            }
+                            .onPageError { page, t ->
+                                // PDF sahifalardan biri yuklanmaganida ishlatiladigan kod
+                                t.printStackTrace() // Xato haqida ma'lumotni ko'rish uchun
+                                Log.e("onPageError", "PDF onPageError: ${t.message}")
+                            }
+                            .onLoad { nbPages ->
+                                // PDF yuklandi
+                            }
+                            .load()
+                    } else {
+                        // PDF Uri null bo'lgan holatda, foydalanuvchiga xabar berish
+                        Toast.makeText(this, "PDF fayl topilmadi", Toast.LENGTH_SHORT).show()
+                    }
+
+            }
 
 
+
+})
 }

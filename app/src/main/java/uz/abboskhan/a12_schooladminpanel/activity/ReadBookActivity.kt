@@ -54,7 +54,7 @@ class ReadBookActivity : AppCompatActivity() {
 
     private fun loadBookData(urlPdf: String) {
         binding.prgReadBook.visibility = View.VISIBLE
-//        val ref = FirebaseStorage.getInstance().getReferenceFromUrl(urlPdf)
+//
         val storage = FirebaseStorage.getInstance()  //getReferenceFromUrl
         val reference = storage.getReferenceFromUrl(urlPdf)
         reference.getBytes(Constants.MAX_PDF_SIZE)

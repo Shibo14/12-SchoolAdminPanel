@@ -7,25 +7,25 @@ import uz.abboskhan.a12_schooladminpanel.model.LibraryData
 
 class FilterLibrary : Filter {
 
-    var filterList: ArrayList<LibraryData>
-    var adapterLibrary: LibraryAdapter
+    private var filterList: ArrayList<LibraryData>
+    private var adapterLibrary: LibraryAdapter
 
 
-    constructor(filterList: List<LibraryData>?, adapterLibrary: LibraryAdapter) {
-        this.filterList = filterList as ArrayList<LibraryData>
+    constructor(filterList: ArrayList<LibraryData>, adapterLibrary: LibraryAdapter) {
+        this.filterList = filterList
         this.adapterLibrary = adapterLibrary
     }
 
     override fun performFiltering(constraint: CharSequence?): FilterResults {
-        var c = constraint
+        var constraint = constraint
         val result = FilterResults()
 
-        if (c != null && c.isNotEmpty()) {
-            c = c.toString().lowercase()
+        if (constraint != null && constraint.isNotEmpty()) {
+            constraint = constraint.toString().lowercase()
             val filterModel = ArrayList<LibraryData>()
             for (i in filterList.indices) {
 
-                if (filterList[i].title.lowercase().contains(c)) {
+                if (filterList[i].title.lowercase().contains(constraint)) {
                     filterModel.add(filterList[i])
                 }
             }

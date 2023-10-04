@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme._12schoolAdminPanel"
         tools:targetApi="31">
-
+        <activity
+            android:name=".activity.library.UploadPdfActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.ReadBookActivity"
             android:exported="false" />
