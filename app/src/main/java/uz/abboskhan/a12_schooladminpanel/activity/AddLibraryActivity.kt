@@ -27,7 +27,6 @@ class AddLibraryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddLibraryBinding
     private var pdfUri: Uri? = null
     private lateinit var titleBook: String
-    private lateinit var description: String
     private var imageUri: Uri? = null
     private var uploadPdfUri = ""
     private var imageUrlPdf = ""

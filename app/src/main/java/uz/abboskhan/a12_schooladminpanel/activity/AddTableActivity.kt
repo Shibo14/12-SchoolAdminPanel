@@ -68,7 +68,7 @@ class AddTableActivity : AppCompatActivity() {
         firebaseData.child("$timestamp")
             .setValue(hashMap)
             .addOnSuccessListener {
-
+     onBackPressed()
                 Toast.makeText(this, "Malumotlar qo'shildi.", Toast.LENGTH_SHORT).show()
 
             }

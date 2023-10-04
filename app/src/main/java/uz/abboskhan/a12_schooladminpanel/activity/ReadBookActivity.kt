@@ -61,7 +61,7 @@ class ReadBookActivity : AppCompatActivity() {
             .addOnSuccessListener { byt ->
 
                 binding.pdfRead.fromBytes(byt)
-                    .swipeHorizontal(true)
+                    .swipeHorizontal(false)
                     .onError { e->
                         Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
 

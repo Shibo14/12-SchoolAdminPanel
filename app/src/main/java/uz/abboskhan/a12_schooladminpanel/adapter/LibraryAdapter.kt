@@ -75,6 +75,7 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
             val i = Intent(c, ReadBookActivity::class.java)
             i.putExtra("id", id)
             i.putExtra("title", title)
+
             // i.putExtra("pdf", urlPdf)
 
             c.startActivity(i)
