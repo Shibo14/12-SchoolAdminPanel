@@ -3,6 +3,7 @@ package uz.abboskhan.a12_schooladminpanel.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -67,7 +68,7 @@ class EditTableActivity : AppCompatActivity() {
     }
 
     private fun getEditData() {
-
+        binding.prgEdtTable.visibility = View.VISIBLE
         val lesson1 = binding.dialogText1Edt.text.toString().trim()
         val lesson2 = binding.dialogText2Edt.text.toString().trim()
         val lesson3 = binding.dialogText3Edt.text.toString().trim()
@@ -95,8 +96,8 @@ class EditTableActivity : AppCompatActivity() {
             .addOnSuccessListener {
 
                 Toast.makeText(this, "Malumotlar Edit.", Toast.LENGTH_SHORT).show()
-               startActivity(Intent(this, EditTableActivity::class.java))
-                finish()
+              onBackPressed()
+                binding.prgEdtTable.visibility = View.GONE
             }
 
             .addOnFailureListener {

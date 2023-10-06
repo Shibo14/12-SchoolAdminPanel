@@ -25,6 +25,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LibraryActivity::class.java))
 
         }
+binding.news.setOnClickListener {
+
+            startActivity(Intent(this, NewsActivity::class.java))
+
+        }
 
 
 

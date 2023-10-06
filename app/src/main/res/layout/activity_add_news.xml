@@ -132,7 +132,7 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:visibility="gone"
-        android:id="@+id/prgAddLibrary"
+        android:id="@+id/prgAddNews"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"

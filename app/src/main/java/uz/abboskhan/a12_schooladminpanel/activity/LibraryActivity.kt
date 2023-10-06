@@ -40,7 +40,7 @@ class LibraryActivity : AppCompatActivity() {
 
     private fun getRewDataLibrary() {
         mList = ArrayList()
-
+        binding.prgLibrary.visibility = View.VISIBLE
         firebaseData.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -49,7 +49,7 @@ class LibraryActivity : AppCompatActivity() {
                     val data = i.getValue(LibraryData::class.java)
                     mList.add(data!!)
                 }
-
+                binding.prgLibrary.visibility = View.VISIBLE
                 myAdapter = LibraryAdapter(mList, this@LibraryActivity)
                 binding.rewClassLibrary.setHasFixedSize(true)
                 binding.rewClassLibrary.layoutManager = LinearLayoutManager(this@LibraryActivity)

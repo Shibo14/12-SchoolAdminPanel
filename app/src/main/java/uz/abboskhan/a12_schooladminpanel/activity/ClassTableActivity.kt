@@ -44,6 +44,7 @@ class ClassTableActivity : AppCompatActivity() {
     }
 
     private fun loadDataTable() {
+        binding.prgTable.visibility = View.VISIBLE
         mTableList = ArrayList()
         firebaseData.orderByChild("classId").equalTo(classId)
             .addValueEventListener(object : ValueEventListener {
@@ -59,6 +60,7 @@ class ClassTableActivity : AppCompatActivity() {
 
 
                     }
+                    binding.prgTable.visibility = View.GONE
                     binding.prgTable.visibility = View.GONE
                     myAdapter = TableAdapter(mTableList, this@ClassTableActivity)
                     binding.rewClassTable.adapter = myAdapter

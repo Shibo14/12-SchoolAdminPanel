@@ -59,6 +59,7 @@ dependencies {
     implementation("com.airbnb.android:lottie:3.4.0")
 
     implementation("com.github.barteksc:android-pdf-viewer:2.8.2")
+    implementation ("com.borjabravo:readmoretextview:2.1.0")
 
 
 

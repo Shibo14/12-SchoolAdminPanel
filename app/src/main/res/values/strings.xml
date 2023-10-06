@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">12-school Admin Panel</string>
+    <string name="show_more_text"> :more</string>
+    <string name="show_more_"> :more</string>
 </resources>
