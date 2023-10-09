@@ -87,7 +87,7 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
                 .setMessage("delete book ")
                 .setPositiveButton("yes") { _, _ ->
 
-                    bookDelete(title, urlPdf,imageUrlPdf)
+                    bookDelete(id, urlPdf,imageUrlPdf)
                 }
                 .setNegativeButton("no") { d, _ ->
 

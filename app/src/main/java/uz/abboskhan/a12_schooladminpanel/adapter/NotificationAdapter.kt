@@ -12,41 +12,43 @@ import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import uz.abboskhan.a12_schooladminpanel.activity.NewsInfo
 import uz.abboskhan.a12_schooladminpanel.databinding.RewNewsBinding
+import uz.abboskhan.a12_schooladminpanel.databinding.RewNotificationBinding
 import uz.abboskhan.a12_schooladminpanel.model.NewsData
+import uz.abboskhan.a12_schooladminpanel.model.NotificationData
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-class NewsAdapter(private val mList: ArrayList<NewsData>, val context: Context) :
-    RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+class NotificationAdapter(private val mList: List<NotificationData>, val context: Context) :
+    RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
-    inner class NewsViewHolder(private var binding: RewNewsBinding) :
+    inner class NotificationViewHolder(private var binding: RewNotificationBinding) :
         RecyclerView.ViewHolder(binding.root) {
-   val btnDelete = binding.newsDelete
-        fun bing(data: NewsData) {
+   val btnDelete = binding.notiDelete
+        fun bing(data: NotificationData) {
 
-            Picasso.get().load(data.imageUrl).into(binding.itemImg)
+
             // binding.itmNewsDesc.setTrimExpandedText(" :more")
-            binding.itemNewstxt.text = data.title
-            binding.itmNewsDesc.text = data.description
+            binding.itemNotiTxt.text = data.title
+            binding.itmNotiDesc.text = data.description
 
 
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        val binding = RewNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NewsViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
+        val binding = RewNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NotificationViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
         val currentItem = mList[position]
        val id = currentItem.id
        val title = currentItem.title
        val description = currentItem.description
        val time = currentItem.timestamp
-       val image = currentItem.imageUrl
+
         holder.bing(currentItem)
 
 
@@ -59,16 +61,7 @@ class NewsAdapter(private val mList: ArrayList<NewsData>, val context: Context) 
 
         val newsTime = sdf.format(Date(time))
 
-        holder.itemView.setOnClickListener {
-            val i  = Intent(context, NewsInfo::class.java)
-            i.putExtra("id",id)
-            i.putExtra("title",title)
-            i.putExtra("description",description)
-            i.putExtra("time",newsTime)
-            i.putExtra("image",image)
-            context.startActivity(i)
 
-        }
 
         holder.btnDelete.setOnClickListener {
             val builder = AlertDialog.Builder(context)
@@ -76,7 +69,7 @@ class NewsAdapter(private val mList: ArrayList<NewsData>, val context: Context) 
                 .setMessage("delete news ")
                 .setPositiveButton("yes") { _, _ ->
 
-                    newsDelete(id, image)
+                    newsDelete(id)
                 }
                 .setNegativeButton("no") { d, _ ->
 
@@ -93,13 +86,9 @@ class NewsAdapter(private val mList: ArrayList<NewsData>, val context: Context) 
         return mList.size
     }
 
-    private fun newsDelete(id: String, urlImage:String) {
-        val ref = FirebaseStorage.getInstance().getReferenceFromUrl(urlImage)
+    private fun newsDelete(id: String) {
 
-        ref.delete()
-            .addOnSuccessListener {
-
-                    val firebaseData = FirebaseDatabase.getInstance().getReference("NewsData")
+                    val firebaseData = FirebaseDatabase.getInstance().getReference("NotificationData")
 
                     firebaseData.child(id)
                         .removeValue()
@@ -107,19 +96,15 @@ class NewsAdapter(private val mList: ArrayList<NewsData>, val context: Context) 
                             Toast.makeText(context, "success delete", Toast.LENGTH_SHORT).show()
 
                         }
-                        .addOnFailureListener {e->
-                            Toast.makeText(context, "delete error: ${e.message}", Toast.LENGTH_SHORT).show()
+                        .addOnFailureListener {
+                            Toast.makeText(context, "delete error", Toast.LENGTH_SHORT).show()
                         }
 
             }
-            .addOnFailureListener {e->
-                Toast.makeText(context, "delete error:${e.message}", Toast.LENGTH_SHORT).show()
 
-            }
     }
 
 
 
 
 
-}

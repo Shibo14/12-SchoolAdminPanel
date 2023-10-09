@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -60,7 +61,7 @@ class NewsActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                Toast.makeText(this@NewsActivity, error.message, Toast.LENGTH_SHORT).show()
             }
         })
     }

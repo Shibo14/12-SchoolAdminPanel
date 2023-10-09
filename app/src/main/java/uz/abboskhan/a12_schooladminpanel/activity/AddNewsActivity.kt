@@ -64,14 +64,14 @@ class AddNewsActivity : AppCompatActivity() {
                         )
                         binding.prgAddNews.visibility = View.GONE
                         onBackPressed()
-                        Toast.makeText(this, "Teacher data save", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "News data save", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener { e ->
 
 
                     // Rasmni yuklashda xatolik yuz berdi
-                    Toast.makeText(this, "Teacher data error ${e.message}", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "News data error ${e.message}", Toast.LENGTH_SHORT)
                         .show()
 
 
@@ -98,13 +98,23 @@ class AddNewsActivity : AppCompatActivity() {
         description: String,
 
     ) {
-        val key = databaseReference.push().key
+        val hashMap: HashMap<String, Any> = HashMap()
 
-        if (key != null) {
-            val data =
-                NewsData(id,timestamp,imageUrl, title, description)
-            databaseReference.child(key).setValue(data)
-        }
+        hashMap["id"] = id
+        hashMap["title"] = title
+        hashMap["imageUrl"] = imageUrl
+        hashMap["description"] = description
+        hashMap["timestamp"] = timestamp
+
+        databaseReference.child(id)
+            .setValue(hashMap)
+            .addOnSuccessListener {
+                Toast.makeText(this, "pdf data upload successful", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "pdf data upload error", Toast.LENGTH_SHORT).show()
+
+            }
 
 
     }

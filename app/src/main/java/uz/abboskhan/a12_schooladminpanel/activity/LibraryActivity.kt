@@ -49,7 +49,7 @@ class LibraryActivity : AppCompatActivity() {
                     val data = i.getValue(LibraryData::class.java)
                     mList.add(data!!)
                 }
-                binding.prgLibrary.visibility = View.VISIBLE
+                binding.prgLibrary.visibility = View.GONE
                 myAdapter = LibraryAdapter(mList, this@LibraryActivity)
                 binding.rewClassLibrary.setHasFixedSize(true)
                 binding.rewClassLibrary.layoutManager = LinearLayoutManager(this@LibraryActivity)

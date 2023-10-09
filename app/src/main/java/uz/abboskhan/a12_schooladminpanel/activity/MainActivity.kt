@@ -25,9 +25,26 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LibraryActivity::class.java))
 
         }
-binding.news.setOnClickListener {
+        binding.news.setOnClickListener {
 
             startActivity(Intent(this, NewsActivity::class.java))
+
+        }
+
+   binding.notification.setOnClickListener {
+
+            startActivity(Intent(this, AddNotificationActivity::class.java))
+
+        }
+
+   binding.tournament.setOnClickListener {
+
+            startActivity(Intent(this, RatingActivity::class.java))
+
+        }
+          binding.notiInfo.setOnClickListener {
+
+            startActivity(Intent(this, NotificationActivity::class.java))
 
         }
 

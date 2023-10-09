@@ -11,9 +11,9 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         jcenter()
+
     }
 }
 
 rootProject.name = "12-school Admin Panel"
 include(":app")
- 

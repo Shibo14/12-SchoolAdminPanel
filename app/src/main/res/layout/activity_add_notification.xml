@@ -4,19 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AddNewsActivity">
-
-    <ImageView
-        android:id="@+id/addNewsImg"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/add_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
+    tools:context=".activity.AddNotificationActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
@@ -25,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addNewsImg">
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
 
 
         <LinearLayout
@@ -61,17 +49,17 @@
                     app:layout_constraintTop_toTopOf="@+id/textView5">
 
                     <EditText
-                        android:id="@+id/dialog_textTitle"
+                        android:id="@+id/notification_textTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Yangiliklar Sarlavhasi"
+                        android:hint="Bildirishnoma Sarlavhasi"
                         android:inputType="textMultiLine"
                         android:textSize="18sp" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/dealog_tv2"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_height="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_margin="8dp"
                     app:boxCornerRadiusBottomEnd="10dp"
@@ -86,15 +74,15 @@
                     <EditText
 
 
-                        android:id="@+id/dialog_textDesc"
+                        android:id="@+id/notification_textDesc"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:lines="10"
                         android:minLines="5"
                         android:gravity="top|left"
                         android:maxLines="15"
-                        android:hint="Yangiliklar tavsifi"
-                        android:inputType="text|textMultiLine"
+                        android:hint="Bildirishnoma tavsifi"
+                        android:inputType="textEmailAddress"
                         android:textSize="18sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Yangiliklar Qo'shish"
+        android:text="Bildirishnoma Qo'shish"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -121,7 +109,7 @@
 
 
     <Button
-        android:id="@+id/btnSaveNews"
+        android:id="@+id/btnNotification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -129,10 +117,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
-
     <com.airbnb.lottie.LottieAnimationView
         android:visibility="gone"
-        android:id="@+id/prgAddNews"
+        android:id="@+id/prgAddNotification"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
