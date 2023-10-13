@@ -19,6 +19,7 @@ class ClassAdapter
     inner class CategoryViewHolder(var binding: RewItemClassBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val classDataTv = binding.itemTxt
+        val classHarfTv = binding.itemHarf
         val classDataDelete = binding.itemImgDelete
 //        fun bing(data: ClassData) {
 //
@@ -39,9 +40,11 @@ class ClassAdapter
         val currentItem = mList[position]
         val id = currentItem.id
         val classNumber = currentItem.classNumber
+        val classHarf = currentItem.harf
         val timestamp = currentItem.timesTamp
 
         holder.classDataTv.text = classNumber
+        holder.classHarfTv.text = classHarf.lowercase()
 
 
         holder.classDataDelete.setOnClickListener {
@@ -64,6 +67,7 @@ class ClassAdapter
             val i = Intent(c, ClassTableActivity::class.java)
             i.putExtra("classNumber", classNumber)
             i.putExtra("classNumberId", id)
+            i.putExtra("harf", classHarf)
 
             c.startActivity(i)
 

@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -36,9 +37,20 @@ class AddClassActivity : AppCompatActivity() {
            if (btnGone(binding.addClass)) {
                binding.addClass.setOnClickListener {
                    dialogData()
+
                }
 
            }
+        binding.rewClass.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && binding.addClass.isShown) {
+                    binding.addClass.hide()
+                } else if (dy < 0 && ! binding.addClass.isShown) {
+                    binding.addClass.show()
+                }
+            }
+        })
 
 
     }
@@ -94,34 +106,39 @@ class AddClassActivity : AppCompatActivity() {
         val editDialogView = layoutInflater.inflate(R.layout.dialog_edd, null)
 
         dialogText = editDialogView.findViewById<EditText>(R.id.dialog_text)
+      val classHarfEdt = editDialogView.findViewById<EditText>(R.id.dialog_class)
 
         editDialog.setView(editDialogView)
         editDialog.setPositiveButton("Saqlash") { _, _ ->
             classData = dialogText.text.toString().trim()
+          val  classHarf = classHarfEdt.text.toString().trim()
 
             val timestamp = System.currentTimeMillis()
+  if (classHarf.isNotEmpty()&&classData.isNotEmpty()) {
+
+      val hashMap = HashMap<String, Any>()
+      hashMap["id"] = "$timestamp"
+      hashMap["classNumber"] = classData
+      hashMap["harf"] = classHarf
+      hashMap["timestamp"] = timestamp
 
 
-            val hashMap = HashMap<String, Any>()
-            hashMap["id"] = "$timestamp"
-            hashMap["classNumber"] = classData
-            hashMap["timestamp"] = timestamp
 
+      firebaseData.child("$timestamp")
+          .setValue(hashMap)
+          .addOnSuccessListener {
 
+              Toast.makeText(this, "Malumotlar qo'shildi.", Toast.LENGTH_SHORT).show()
 
-            firebaseData.child("$timestamp")
-                .setValue(hashMap)
-                .addOnSuccessListener {
+          }
+          .addOnFailureListener {
 
-                    Toast.makeText(this, "Malumotlar qo'shildi.", Toast.LENGTH_SHORT).show()
+              Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
+          }
 
-                }
-                .addOnFailureListener {
-
-                    Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
-                }
-
-
+  }else{
+      Toast.makeText(this, "Ma'lumotlarni to'liq kiriting", Toast.LENGTH_SHORT).show()
+  }
         }
         editDialog.setNegativeButton("Bekor qilish") { _, _ ->
 

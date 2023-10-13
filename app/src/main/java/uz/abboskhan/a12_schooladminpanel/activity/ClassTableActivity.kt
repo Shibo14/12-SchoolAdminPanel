@@ -4,8 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -21,24 +24,41 @@ class ClassTableActivity : AppCompatActivity() {
     private var classId = ""
     private var classTitle = ""
     private lateinit var mTableList: ArrayList<TableData>
-    private lateinit var spinnerBtn: TextView
+
     private lateinit var myAdapter: TableAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityClassTableBinding.inflate(layoutInflater)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
         setContentView(binding.root)
         binding.prgTable.visibility = View.VISIBLE
 
         classTitle = intent.getStringExtra("classNumber")!!
         classId = intent.getStringExtra("classNumberId")!!
+      val classHarf = intent.getStringExtra("harf")!!
+
         loadDataTable()
         binding.addSchedule.setOnClickListener {
             val i = Intent(this, AddTableActivity::class.java)
             i.putExtra("classNumberId", classId)
+            i.putExtra("classHarf", classHarf)
+
             startActivity(i)
 
         }
+        binding.rewClassTable.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && binding.addSchedule.isShown) {
+                    binding.addSchedule.hide()
+                } else if (dy < 0 && ! binding.addSchedule.isShown) {
+                    binding.addSchedule.show()
+                }
+            }
+        })
 
 
     }

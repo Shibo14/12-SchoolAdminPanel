@@ -2,17 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
+
         app:cardElevation="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="#A1ADEA"
         app:cardCornerRadius="8dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,8 +29,8 @@
 
             <ImageView
                 android:id="@+id/itemImgDelete"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
@@ -43,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:text="1"
-                android:textColor="@color/green"
+                android:textColor="@color/white"
                 android:textSize="34sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -52,16 +54,29 @@
                 app:layout_constraintVertical_bias="0.505" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/item_harf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="- Sinf"
-                android:textColor="@color/green"
-                android:textSize="24sp"
+                android:text=" a"
+                android:textColor="@color/white"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/itemTxt"
                 app:layout_constraintStart_toEndOf="@+id/itemTxt"
                 app:layout_constraintTop_toTopOf="@+id/itemTxt" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text=" - Sinf"
+                android:textColor="@color/white"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/itemTxt"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

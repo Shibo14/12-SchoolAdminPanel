@@ -9,7 +9,6 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,9 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityAddLibraryBinding
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileInputStream
+import uz.abboskhan.a12_schooladminpanel.model.Progressbar
 
 class AddLibraryActivity : AppCompatActivity() {
     private val firebaseData = FirebaseDatabase.getInstance().getReference("BooksData")
@@ -53,74 +50,88 @@ class AddLibraryActivity : AppCompatActivity() {
     }
 
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
     private fun uploadFireBaseData() {
-     binding.prgAddLibrary.visibility = View.VISIBLE
         titleBook = binding.dialogTextTitle.text.toString().trim()
 
+        if (titleBook.isEmpty()) {
+            TextUtils.isEmpty(title) && !Patterns.EMAIL_ADDRESS.matcher(title).matches()
+            binding.dialogTextTitle.error = "Kitob nomini kiriting"
+        } else if (null == pdfUri) {
+            Toast.makeText(this, "pdf qo'shing", Toast.LENGTH_SHORT).show()
+        } else if (null == imageUri) {
+            Toast.makeText(this, "Kitob rasmni qo'shing", Toast.LENGTH_SHORT).show()
 
-        val timestamp = System.currentTimeMillis()
-        val id = timestamp.toString()
-        if (validateForm(titleBook) && pdfUri != null) {
+        } else {
 
-            val fileName = "BooksPdf/$timestamp"
-            val sRef = FirebaseStorage.getInstance().getReference(fileName)
-
-            sRef.putFile(pdfUri!!)
-                .addOnSuccessListener { thk ->
-                    val uriTask: Task<Uri> = thk.storage.downloadUrl
-                    while (!uriTask.isSuccessful);
-                    uploadPdfUri = "${uriTask.result}"
-                    val storageReference: StorageReference =
-                        FirebaseStorage.getInstance().getReference("BookImages")
-
-                    val imageRef = storageReference.child("${System.currentTimeMillis()}.jpg")
-
-                    imageUri?.let {
-                        imageRef.putFile(it)
-                            .addOnSuccessListener { taskSnapshot ->
-                                imageRef.downloadUrl.addOnSuccessListener { uri ->
-                                    imageUrlPdf = uri.toString()
-                                    saveDataToDatabase(uploadPdfUri, timestamp, id,imageUrlPdf)
-                                    onBackPressed()
-                                    Toast.makeText(this, "Teacher data save", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                            .addOnFailureListener { e ->
-                                // Rasmni yuklashda xatolik yuz berdi
-                                Toast.makeText(this, "Teacher data error ${e.message}", Toast.LENGTH_SHORT)
-                                    .show()
-
-
-                            }
-
-
-                    }
-
-
-                    binding.prgAddLibrary.visibility = View.GONE
-                    Toast.makeText(this, "pdf upload successful", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { e ->
-                    binding.prgAddLibrary.visibility = View.GONE
-
-                    // Rasmni yuklashda xatolik yuz berdi
-                    Toast.makeText(this, "Book ${e.message}", Toast.LENGTH_SHORT)
-                        .show()
-
-                }
-
+            saveData(titleBook)
 
         }
 
 
     }
 
+    private fun saveData(titleBook: String) {
+        val myPrg = Progressbar(this)
+        myPrg.startDialog()
+
+        val timestamp = System.currentTimeMillis()
+        val id = timestamp.toString()
+        val fileName = "BooksPdf/$timestamp"
+        val sRef = FirebaseStorage.getInstance().getReference(fileName)
+        sRef.putFile(pdfUri!!)
+            .addOnSuccessListener { thk ->
+                val uriTask: Task<Uri> = thk.storage.downloadUrl
+                while (!uriTask.isSuccessful);
+                uploadPdfUri = "${uriTask.result}"
+                val storageReference: StorageReference =
+                    FirebaseStorage.getInstance().getReference("BookImages")
+
+                val imageRef = storageReference.child("${System.currentTimeMillis()}.jpg")
+
+                imageUri?.let {
+                    imageRef.putFile(it)
+                        .addOnSuccessListener { taskSnapshot ->
+                            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                                imageUrlPdf = uri.toString()
+                                saveDataToDatabase(titleBook,uploadPdfUri, timestamp, id, imageUrlPdf)
+                                onBackPressed()
+                                myPrg.dismissProgressBar()
+                                Toast.makeText(this, "Teacher data save", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            myPrg.dismissProgressBar()
+                            // Rasmni yuklashda xatolik yuz berdi
+                            Toast.makeText(
+                                this,
+                                "Teacher data error ${e.message}",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+
+                        }
 
 
+                }
+
+
+                myPrg.dismissProgressBar()
+                Toast.makeText(this, "pdf upload successful", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                myPrg.dismissProgressBar()
+
+                // Rasmni yuklashda xatolik yuz berdi
+                Toast.makeText(this, "Book ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
+
+            }
+    }
 
 
     private fun saveDataToDatabase(
+        titleBook: String,
         uploadPdfUri: String,
         timestamp: Long,
         id: String,
@@ -149,24 +160,6 @@ class AddLibraryActivity : AppCompatActivity() {
     }
 
 
-    private fun validateForm(title: String): Boolean {
-        return when {
-            TextUtils.isEmpty(title) && !Patterns.EMAIL_ADDRESS.matcher(title).matches() -> {
-                binding.dialogTextTitle.error = "Kitob nomini kiriting"
-                false
-            }
-
-
-
-
-            else -> {
-                binding.dialogTextTitle.error = null
-                true
-            }
-        }
-    }
-
-
     private fun pdfAdd() {
         val i = Intent()
         i.type = "application/pdf"
@@ -179,6 +172,7 @@ class AddLibraryActivity : AppCompatActivity() {
 
         binding.imgAddPdf.visibility = View.GONE
     }
+
     private val resultLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) {
@@ -220,9 +214,8 @@ class AddLibraryActivity : AppCompatActivity() {
                         Toast.makeText(this, "PDF fayl topilmadi", Toast.LENGTH_SHORT).show()
                     }
 
-            }
+                }
 
 
-
-})
+            })
 }

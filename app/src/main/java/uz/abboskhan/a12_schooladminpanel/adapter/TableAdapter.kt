@@ -24,6 +24,7 @@ class TableAdapter
     inner class TableViewHolder(private var binding: RewTebleClassBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val classTableTv = binding.itemTxtClassNumber
+        val classHarfTv = binding.classHarf
         val day = binding.itmTxtDay
         val lesson1 = binding.itmLesson1
         val lesson2 = binding.itmLesson2
@@ -79,7 +80,7 @@ class TableAdapter
         holder.lesson6.text = lesson6
         holder.lesson7.text = lesson7
 
-        loadClassData(classId, holder.classTableTv)
+        loadClassData(classId, holder.classTableTv, holder.classHarfTv)
 
 
         holder.classTableMoreBtn.setOnClickListener {
@@ -145,16 +146,18 @@ class TableAdapter
         return mTAbleList.size
     }
 
-    private fun loadClassData(classId: String, classTv: TextView) {
+    private fun loadClassData(classId: String, classTv: TextView, classHarfTv: TextView) {
 
         val ref = FirebaseDatabase.getInstance().getReference("Class")
         ref.child(classId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val classNumber = "${snapshot.child("classNumber").value}"
+                    val classHarf = "${snapshot.child("harf").value}"
 
-
+                    classHarfTv.text = classHarf.lowercase().toString()
                     classTv.text = classNumber.toString()
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {

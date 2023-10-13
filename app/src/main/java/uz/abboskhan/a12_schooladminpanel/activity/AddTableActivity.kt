@@ -24,6 +24,8 @@ class AddTableActivity : AppCompatActivity() {
         binding = ActivityAddTableBinding.inflate(layoutInflater)
         setContentView(binding.root)
         classId = intent.getStringExtra("classNumberId")!!
+       val getClassHarf = intent.getStringExtra("classHarf")!!
+
         loadDataAddFirebase()
         binding.addTableSave.setOnClickListener {
             addDataFirebase()
@@ -98,7 +100,7 @@ class AddTableActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@AddTableActivity, "spinner data error", Toast.LENGTH_SHORT)
+                Toast.makeText(this@AddTableActivity, "data error", Toast.LENGTH_SHORT)
                     .show()
 
             }
@@ -107,30 +109,7 @@ class AddTableActivity : AppCompatActivity() {
 
 
 
-    private fun spinnerDialog() {
 
-
-        val classArray = arrayOfNulls<String>(classArrayList.size)
-
-        for (i in classArrayList.indices) {
-            classArray[i] = classArrayList[i].classNumber
-        }
-        AlertDialog.Builder(this).setTitle("Sinf tanlash")
-            .setItems(classArray) { d, which ->
-
-                classTitle = classArrayList[which].classNumber.toString()
-                classId = classArrayList[which].id.toString()
-
-                Toast.makeText(this, "$classTitle ", Toast.LENGTH_SHORT).show()
-
-
-                binding.addTableCategory.text = classTitle.toString()
-
-            }.create()
-            .show()
-
-
-    }
 
 
 }

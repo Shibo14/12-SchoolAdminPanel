@@ -41,7 +41,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/item_imgMore"
-                    app:layout_constraintStart_toEndOf="@+id/item_txt_classNumber"
+                    app:layout_constraintStart_toEndOf="@+id/textView12"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
@@ -64,7 +64,6 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:text="1"
-                    android:textColor="@color/green"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -76,10 +75,21 @@
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="- Sinf"
-                    android:textSize="16sp"
+                    android:layout_marginStart="16dp"
+                    android:text=" -  Sinf"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/item_txt_classNumber"
+                    app:layout_constraintStart_toEndOf="@+id/item_txt_classNumber"
+                    app:layout_constraintTop_toTopOf="@+id/item_txt_classNumber" />
+
+                <TextView
+                    android:id="@+id/classHarf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="a"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/item_txt_classNumber"
                     app:layout_constraintTop_toTopOf="@+id/item_txt_classNumber" />
             </androidx.constraintlayout.widget.ConstraintLayout>
