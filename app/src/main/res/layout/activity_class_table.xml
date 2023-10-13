@@ -3,96 +3,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     android:background="@color/purple_700"
     tools:context=".activity.ClassTableActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:fitsSystemWindows="true"
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="280dp"
         android:background="@color/purple_700"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:contentScrim="@color/purple_700"
-            app:layout_scrollFlags="scroll|snap|enterAlwaysCollapsed">
+            android:fitsSystemWindows="true"
+            app:title="Dars jadvali"
+            app:titleCollapseMode="scale"
+            app:expandedTitleTextAppearance="@style/Theme.Collapsingtoolbar"
+            app:collapsedTitleTextAppearance="@style/Theme.Collapsingtoolbar"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <ImageView
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:id="@+id/newsImg"
+                android:layout_width="320dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center|end"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/calendar_class"
+                app:layout_collapseMode="parallax" />
+
+            <androidx.appcompat.widget.Toolbar
+                app:popupTheme="@style/Theme.AppCompat.Light"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                >
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView3"
-                    android:layout_width="250dp"
-                    android:layout_height="200dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="24dp"
-                    app:cardBackgroundColor="@color/purple_500"
-                    app:cardCornerRadius="8dp"
-                    app:cardPreventCornerOverlap="true"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/newsImg"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/seminar"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/newsDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:gravity="center"
-                    android:shadowDx="10"
-                    android:shadowDy="10"
-                    android:text="Sinflar"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardView3">
-
-                </TextView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@drawable/nested_bc"
         android:id="@+id/rew_class_table"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
+        android:background="@drawable/nested_bc"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -103,7 +69,6 @@
         android:id="@+id/addSchedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"

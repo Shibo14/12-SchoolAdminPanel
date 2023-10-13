@@ -3,6 +3,7 @@ package uz.abboskhan.a12_schooladminpanel.activity
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -10,10 +11,12 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import uz.abboskhan.a12_schooladminpanel.model.ClassData
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityAddTableBinding
+import uz.abboskhan.a12_schooladminpanel.model.Progressbar
 
 class AddTableActivity : AppCompatActivity() {
     private val firebaseData = FirebaseDatabase.getInstance().getReference("Table")
-  //  private val ref = FirebaseDatabase.getInstance().getReference("Class")
+
+    //  private val ref = FirebaseDatabase.getInstance().getReference("Class")
     private lateinit var binding: ActivityAddTableBinding
 
     private lateinit var classArrayList: ArrayList<ClassData>
@@ -24,7 +27,7 @@ class AddTableActivity : AppCompatActivity() {
         binding = ActivityAddTableBinding.inflate(layoutInflater)
         setContentView(binding.root)
         classId = intent.getStringExtra("classNumberId")!!
-       val getClassHarf = intent.getStringExtra("classHarf")!!
+        val getClassHarf = intent.getStringExtra("classHarf")!!
 
         loadDataAddFirebase()
         binding.addTableSave.setOnClickListener {
@@ -47,9 +50,38 @@ class AddTableActivity : AppCompatActivity() {
         val lesson7 = binding.dialogText7.text.toString().trim()
         val day = binding.day.text.toString().trim()
 
+        if (TextUtils.isEmpty(lesson1)) {
+            binding.dealogTv1.error = "Fanni kiriting"
+        } else if (TextUtils.isEmpty(lesson2)) {
+            binding.dealogTv2.error = "Fanni kiriting"
+        } else if (TextUtils.isEmpty(lesson3)) {
+            binding.dealogTv3.error = "Fanni kiriting"
+        } else if (TextUtils.isEmpty(lesson4)) {
+            binding.dealogTv4.error = "Fanni kiriting"
+        } else if (TextUtils.isEmpty(day)) {
+            binding.dealogTv1.error = "Hafta kunini kiriting"
+        } else {
+            getTableData(lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, day)
+        }
+
+
+    }
+
+    private fun getTableData(
+        lesson1: String,
+        lesson2: String,
+        lesson3: String,
+        lesson4: String,
+        lesson5: String,
+        lesson6: String,
+        lesson7: String,
+        day: String
+    ) {
 
         val timestamp = System.currentTimeMillis()
 
+        val myPrg = Progressbar(this)
+        myPrg.startDialog()
 
         val hashMap = HashMap<String, Any>()
         hashMap["id"] = "$timestamp"
@@ -62,7 +94,6 @@ class AddTableActivity : AppCompatActivity() {
         hashMap["lesson6"] = "$lesson6"
         hashMap["lesson7"] = "$lesson7"
         hashMap["classId"] = "$classId"
-
         hashMap["timestamp"] = timestamp
 
 
@@ -70,12 +101,15 @@ class AddTableActivity : AppCompatActivity() {
         firebaseData.child("$timestamp")
             .setValue(hashMap)
             .addOnSuccessListener {
-     onBackPressed()
+                myPrg.dismissProgressBar()
+                onBackPressed()
                 Toast.makeText(this, "Malumotlar qo'shildi.", Toast.LENGTH_SHORT).show()
 
             }
 
             .addOnFailureListener {
+                myPrg.dismissProgressBar()
+
                 Toast.makeText(this, "table data error.", Toast.LENGTH_SHORT).show()
 
             }
@@ -106,10 +140,6 @@ class AddTableActivity : AppCompatActivity() {
             }
         })
     }
-
-
-
-
 
 
 }

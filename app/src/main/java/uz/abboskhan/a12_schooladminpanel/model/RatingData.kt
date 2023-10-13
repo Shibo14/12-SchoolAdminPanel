@@ -8,9 +8,9 @@ class RatingData{
      var studentSuraName: String = ""
      var studentAge: String = ""
      var studentScience: String = ""
-     var studentPhoneNumber: String = ""
+     var studentClassNumber: String = ""
 
-    constructor()
+
     constructor(
         id: String,
         timestamp: Long,
@@ -19,7 +19,7 @@ class RatingData{
         studentSuraName: String,
         studentAge: String,
         studentScience: String,
-        studentPhoneNumber: String
+        studentClassNumber: String
     ) {
         this.id = id
         this.timestamp = timestamp
@@ -28,8 +28,8 @@ class RatingData{
         this.studentSuraName = studentSuraName
         this.studentAge = studentAge
         this.studentScience = studentScience
-        this.studentPhoneNumber = studentPhoneNumber
+        this.studentClassNumber = studentClassNumber
     }
 
-
+    constructor()
 }

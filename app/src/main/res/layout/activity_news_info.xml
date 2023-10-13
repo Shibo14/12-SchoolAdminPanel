@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#26044B"
     tools:context=".activity.NewsInfo">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -60,6 +61,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:textColor="@color/textColorWhite"
                 android:id="@+id/newsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,6 +78,7 @@
             </TextView>
 
             <TextView
+                android:textColor="@color/textColorWhite"
                 android:id="@+id/newsDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

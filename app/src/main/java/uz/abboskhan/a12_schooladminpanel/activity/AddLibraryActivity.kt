@@ -54,8 +54,7 @@ class AddLibraryActivity : AppCompatActivity() {
     private fun uploadFireBaseData() {
         titleBook = binding.dialogTextTitle.text.toString().trim()
 
-        if (titleBook.isEmpty()) {
-            TextUtils.isEmpty(title) && !Patterns.EMAIL_ADDRESS.matcher(title).matches()
+        if ( TextUtils.isEmpty(title)) {
             binding.dialogTextTitle.error = "Kitob nomini kiriting"
         } else if (null == pdfUri) {
             Toast.makeText(this, "pdf qo'shing", Toast.LENGTH_SHORT).show()

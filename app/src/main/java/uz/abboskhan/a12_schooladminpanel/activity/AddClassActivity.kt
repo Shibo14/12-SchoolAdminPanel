@@ -34,13 +34,13 @@ class AddClassActivity : AppCompatActivity() {
         getDataRew()
               binding.prgClass.visibility = View.VISIBLE
 
-           if (btnGone(binding.addClass)) {
+
                binding.addClass.setOnClickListener {
                    dialogData()
 
                }
 
-           }
+
         binding.rewClass.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -54,23 +54,23 @@ class AddClassActivity : AppCompatActivity() {
 
 
     }
-    private fun btnGone(btn: FloatingActionButton): Boolean {
-        firebaseData.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                if (dataSnapshot.exists()) {
-                    btn.visibility = View.VISIBLE
-                } else {
-                  btn.visibility = View.GONE
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        })
-        return true
-    }
+//    private fun btnGone(btn: FloatingActionButton): Boolean {
+//        firebaseData.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//
+//                if (dataSnapshot.exists()) {
+//                    btn.visibility = View.VISIBLE
+//                } else {
+//                  btn.visibility = View.GONE
+//                }
+//            }
+//
+//            override fun onCancelled(databaseError: DatabaseError) {
+//
+//            }
+//        })
+//        return true
+//    }
 
     private fun getDataRew() {
         mList = ArrayList()
@@ -113,31 +113,13 @@ class AddClassActivity : AppCompatActivity() {
             classData = dialogText.text.toString().trim()
           val  classHarf = classHarfEdt.text.toString().trim()
 
-            val timestamp = System.currentTimeMillis()
-  if (classHarf.isNotEmpty()&&classData.isNotEmpty()) {
 
-      val hashMap = HashMap<String, Any>()
-      hashMap["id"] = "$timestamp"
-      hashMap["classNumber"] = classData
-      hashMap["harf"] = classHarf
-      hashMap["timestamp"] = timestamp
+  if (classHarf.isEmpty()&&classData.isEmpty()) {
+      Toast.makeText(this, "Ma'lumotni to'liq kiriting", Toast.LENGTH_SHORT).show()
 
-
-
-      firebaseData.child("$timestamp")
-          .setValue(hashMap)
-          .addOnSuccessListener {
-
-              Toast.makeText(this, "Malumotlar qo'shildi.", Toast.LENGTH_SHORT).show()
-
-          }
-          .addOnFailureListener {
-
-              Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
-          }
 
   }else{
-      Toast.makeText(this, "Ma'lumotlarni to'liq kiriting", Toast.LENGTH_SHORT).show()
+      getNoteData(classHarf,classData)
   }
         }
         editDialog.setNegativeButton("Bekor qilish") { _, _ ->
@@ -148,6 +130,29 @@ class AddClassActivity : AppCompatActivity() {
         dialog.show()
 
 
+    }
+
+    private fun getNoteData(classHarf: String, classData: String) {
+        val timestamp = System.currentTimeMillis()
+        val hashMap = HashMap<String, Any>()
+        hashMap["id"] = "$timestamp"
+        hashMap["classNumber"] = classData
+        hashMap["harf"] = classHarf
+        hashMap["timestamp"] = timestamp
+
+
+
+        firebaseData.child("$timestamp")
+            .setValue(hashMap)
+            .addOnSuccessListener {
+
+                Toast.makeText(this, "Malumotlar qo'shildi.", Toast.LENGTH_SHORT).show()
+
+            }
+            .addOnFailureListener {
+
+                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
+            }
     }
 
 
