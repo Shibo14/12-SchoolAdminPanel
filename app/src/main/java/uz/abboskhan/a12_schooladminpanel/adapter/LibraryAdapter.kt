@@ -14,6 +14,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.github.barteksc.pdfviewer.PDFView
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import uz.abboskhan.a12_schooladminpanel.activity.ReadBookActivity
 import uz.abboskhan.a12_schooladminpanel.databinding.RewLibraryBinding
@@ -35,6 +36,7 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
         val title = binding.pdfItmTitle
         val description = binding.pdfItmDesc
         val btnMore = binding.pdfItmMore
+        val progressbar = binding.progressBar2
 
         val pdfView = binding.pdfView
 
@@ -58,7 +60,22 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
         val imageUrlPdf = currentItem.imageUrlPdf
         val time = currentItem.timesTamp
 
-        Picasso.get().load(imageUrlPdf).into(holder.pdfView)
+
+        holder.progressbar.visibility = View.VISIBLE
+        Picasso.get().load(imageUrlPdf).into(holder.pdfView, object : Callback {
+            override fun onSuccess() {
+
+                holder.progressbar.visibility = View.GONE
+            }
+
+            override fun onError(e: Exception?) {
+
+                Log.e("LibraryAdapter", "Rasmni olishda xatolik: ${e?.message}")
+
+
+                holder.progressbar.visibility = View.GONE // ProgressBar'ni yashirish
+            }
+        })
 
         val uzTimeZone = TimeZone.getTimeZone("Asia/Tashkent") // O'zbekiston vaqti
         val calendar = Calendar.getInstance(uzTimeZone)
