@@ -3,6 +3,7 @@ package uz.abboskhan.a12_schooladminpanel.activity
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,6 +13,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import uz.abboskhan.a12_schooladminpanel.model.TeacherData
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityAddTechBinding
+import uz.abboskhan.a12_schooladminpanel.model.Progressbar
 
 class AddTechActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddTechBinding
@@ -36,14 +38,43 @@ class AddTechActivity : AppCompatActivity() {
     }
 
     private fun getTechData() {
-        binding.prgAddTech.visibility = View.VISIBLE
+
         val techName = binding.addTechName.text.toString()
         val techSuraName = binding.addTechNameLas.text.toString()
         val techAge = binding.addTechAge.text.toString()
         val techScience = binding.addTechScience.text.toString()
         val techPhoneNumber = binding.addTechPhoneNumber.text.toString()
+
+        if (TextUtils.isEmpty(techSuraName)) {
+            binding.addTechNameLas.error = "Familyani kiriting"
+        } else if (TextUtils.isEmpty(techName)) {
+            binding.addTechName.error = "Isimni kiriting"
+        } else if (TextUtils.isEmpty(techAge)) {
+            binding.addTechAge.error = "Yoshni kiriting"
+        } else if (TextUtils.isEmpty(techScience)) {
+            binding.addTechScience.error = "Fanni kiriting"
+        } else if (TextUtils.isEmpty(techPhoneNumber)) {
+            binding.addTechPhoneNumber.error = "Telefon raqamini kiriting"
+        } else if (imageUri == null) {
+            Toast.makeText(this, "Rasm tanlanmagan", Toast.LENGTH_SHORT).show()
+        } else {
+            getTeacherFirebaseData(techSuraName, techName, techAge, techScience, techPhoneNumber)
+        }
+
+
+    }
+
+    private fun getTeacherFirebaseData(
+        techSuraName: String,
+        techName: String,
+        techAge: String,
+        techScience: String,
+        techPhoneNumber: String
+    ) {
+        val myPrg = Progressbar(this)
+        myPrg.startDialog()
         val timestamp = System.currentTimeMillis()
-         val id = "$timestamp"
+        val id = "$timestamp"
         val imageRef = storageReference.child("${System.currentTimeMillis()}.jpg")
 
         imageUri?.let {
@@ -62,14 +93,14 @@ class AddTechActivity : AppCompatActivity() {
                             techScience,
                             techPhoneNumber
                         )
-                        binding.prgAddTech.visibility = View.GONE
+                        myPrg.dismissProgressBar()
                         onBackPressed()
                         Toast.makeText(this, "Teacher data save", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener { e ->
 
-
+                    myPrg.dismissProgressBar()
                     // Rasmni yuklashda xatolik yuz berdi
                     Toast.makeText(this, "Teacher data error ${e.message}", Toast.LENGTH_SHORT)
                         .show()
@@ -104,7 +135,16 @@ class AddTechActivity : AppCompatActivity() {
 
         if (key != null) {
             val data =
-                TeacherData(id,timestamp,imageUrl, techName, techSuraName, techAge, techScience, techPhoneNumber)
+                TeacherData(
+                    id,
+                    timestamp,
+                    imageUrl,
+                    techName,
+                    techSuraName,
+                    techAge,
+                    techScience,
+                    techPhoneNumber
+                )
             databaseReference.child(key).setValue(data)
         }
 

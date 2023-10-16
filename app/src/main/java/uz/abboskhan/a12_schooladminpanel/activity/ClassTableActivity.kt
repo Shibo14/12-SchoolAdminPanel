@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener
 import uz.abboskhan.a12_schooladminpanel.adapter.TableAdapter
 import uz.abboskhan.a12_schooladminpanel.model.TableData
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityClassTableBinding
+import uz.abboskhan.a12_schooladminpanel.model.Progressbar
 
 class ClassTableActivity : AppCompatActivity() {
     private val firebaseData = FirebaseDatabase.getInstance().getReference("Table")
@@ -33,11 +34,11 @@ class ClassTableActivity : AppCompatActivity() {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE)
 //        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(binding.root)
-        binding.prgTable.visibility = View.VISIBLE
+
 
         classTitle = intent.getStringExtra("classNumber")!!
         classId = intent.getStringExtra("classNumberId")!!
-      val classHarf = intent.getStringExtra("harf")!!
+        val classHarf = intent.getStringExtra("harf")!!
 
         loadDataTable()
         binding.addSchedule.setOnClickListener {
@@ -53,7 +54,7 @@ class ClassTableActivity : AppCompatActivity() {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0 && binding.addSchedule.isShown) {
                     binding.addSchedule.hide()
-                } else if (dy < 0 && ! binding.addSchedule.isShown) {
+                } else if (dy < 0 && !binding.addSchedule.isShown) {
                     binding.addSchedule.show()
                 }
             }
@@ -63,7 +64,8 @@ class ClassTableActivity : AppCompatActivity() {
     }
 
     private fun loadDataTable() {
-        binding.prgTable.visibility = View.VISIBLE
+        val myProcess = Progressbar(this)
+        myProcess.startDialog()
         mTableList = ArrayList()
         firebaseData.orderByChild("classId").equalTo(classId)
             .addValueEventListener(object : ValueEventListener {
@@ -79,8 +81,7 @@ class ClassTableActivity : AppCompatActivity() {
 
 
                     }
-                    binding.prgTable.visibility = View.GONE
-                    binding.prgTable.visibility = View.GONE
+                    myProcess.dismissProgressBar()
                     myAdapter = TableAdapter(mTableList, this@ClassTableActivity)
                     binding.rewClassTable.adapter = myAdapter
 
@@ -93,9 +94,6 @@ class ClassTableActivity : AppCompatActivity() {
 
 
     }
-
-
-
 
 
 }
