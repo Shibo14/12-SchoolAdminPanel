@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.TextureView
 import android.view.View
 import android.widget.Toast
@@ -32,7 +33,8 @@ class LibraryActivity : AppCompatActivity() {
         binding.addLibrary.setOnClickListener {
             startActivity(Intent(this, AddLibraryActivity::class.java))
         }
-         
+
+
         getRewDataLibrary()
 
     }

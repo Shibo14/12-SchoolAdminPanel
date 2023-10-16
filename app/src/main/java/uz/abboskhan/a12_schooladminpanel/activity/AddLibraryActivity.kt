@@ -94,8 +94,8 @@ class AddLibraryActivity : AppCompatActivity() {
                             imageRef.downloadUrl.addOnSuccessListener { uri ->
                                 imageUrlPdf = uri.toString()
                                 saveDataToDatabase(titleBook,uploadPdfUri, timestamp, id, imageUrlPdf)
-                                onBackPressed()
                                 myPrg.dismissProgressBar()
+                                onBackPressed()
                                 Toast.makeText(this, "Teacher data save", Toast.LENGTH_SHORT).show()
                             }
                         }

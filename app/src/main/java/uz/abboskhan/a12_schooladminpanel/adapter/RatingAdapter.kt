@@ -44,7 +44,7 @@ class RatingAdapter(private val mList: List<RatingData>, val context: Context): 
         val studentSureName = currentItem.studentSuraName
         val studentAge = currentItem.studentAge
         val imageUrl = currentItem.imageUrl
-        val studentPhoneNumber = currentItem.studentPhoneNumber
+        val studentPhoneNumber = currentItem.studentClassNumber
         val studentScience = currentItem.studentScience
 
         holder.bing(currentItem)
@@ -57,7 +57,7 @@ class RatingAdapter(private val mList: List<RatingData>, val context: Context): 
             i.putExtra("studentSureName",studentSureName)
             i.putExtra("studentAge",studentAge)
             i.putExtra("imageUrl",imageUrl)
-            i.putExtra("studentPhoneNumber",studentPhoneNumber)
+            i.putExtra("studentClassNumber",studentPhoneNumber)
             i.putExtra("studentScience",studentScience)
             context.startActivity(i)
 

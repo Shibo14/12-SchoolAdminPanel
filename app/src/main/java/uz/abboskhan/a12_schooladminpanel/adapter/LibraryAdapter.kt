@@ -4,26 +4,33 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
+
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.LottieAnimationView
-import com.github.barteksc.pdfviewer.PDFView
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import uz.abboskhan.a12_schooladminpanel.activity.ReadBookActivity
 import uz.abboskhan.a12_schooladminpanel.databinding.RewLibraryBinding
+import uz.abboskhan.a12_schooladminpanel.filter.FilterLibrary
 import uz.abboskhan.a12_schooladminpanel.model.LibraryData
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 
-class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context) :
+class LibraryAdapter(
+    var mLibraryList: ArrayList<LibraryData>,
+
+    private val c: Context
+) :
     RecyclerView.Adapter<LibraryAdapter.LibraryViewHolder>() {
     object Constants {
         const val MAX_PDF_SIZE: Long = 100000000
@@ -35,7 +42,7 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
         val title = binding.pdfItmTitle
         val description = binding.pdfItmDesc
         val btnMore = binding.pdfItmMore
-
+        val progressbar = binding.progressBar2
         val pdfView = binding.pdfView
 
     }
@@ -58,7 +65,22 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
         val imageUrlPdf = currentItem.imageUrlPdf
         val time = currentItem.timesTamp
 
-        Picasso.get().load(imageUrlPdf).into(holder.pdfView)
+      //  Picasso.get().load(imageUrlPdf).into(holder.pdfView)
+        holder.progressbar.visibility = View.VISIBLE
+        Picasso.get().load(imageUrlPdf).into(holder.pdfView, object : Callback {
+            override fun onSuccess() {
+
+                holder.progressbar.visibility = View.GONE
+            }
+
+            override fun onError(e: Exception?) {
+
+                Log.e("LibraryAdapter", "Rasmni olishda xatolik: ${e?.message}")
+
+
+                holder.progressbar.visibility = View.GONE // ProgressBar'ni yashirish
+            }
+        })
 
         val uzTimeZone = TimeZone.getTimeZone("Asia/Tashkent") // O'zbekiston vaqti
         val calendar = Calendar.getInstance(uzTimeZone)
@@ -87,7 +109,7 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
                 .setMessage("delete book ")
                 .setPositiveButton("yes") { _, _ ->
 
-                    bookDelete(id, urlPdf,imageUrlPdf)
+                    bookDelete(id, urlPdf, imageUrlPdf)
                 }
                 .setNegativeButton("no") { d, _ ->
 
@@ -101,7 +123,7 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
 
     }
 
-    private fun bookDelete(id: String, urlPdf: String,imageUrlPdf:String) {
+    private fun bookDelete(id: String, urlPdf: String, imageUrlPdf: String) {
 
         val ref1 = FirebaseStorage.getInstance().getReferenceFromUrl(urlPdf)
         val ref2 = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrlPdf)
@@ -112,7 +134,7 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
                     val firebaseData = FirebaseDatabase.getInstance().getReference("BooksData")
 
                     firebaseData.child(id)
-                   .removeValue()
+                        .removeValue()
                         .addOnSuccessListener {
                             Toast.makeText(c, "success delete", Toast.LENGTH_SHORT).show()
 
@@ -127,6 +149,7 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
 
             }
     }
+
 
     /*
         private fun loadLibraryData(

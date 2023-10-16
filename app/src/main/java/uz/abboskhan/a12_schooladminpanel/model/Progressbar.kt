@@ -10,7 +10,7 @@ class Progressbar(var context: Context) {
     private val prgDialog = AlertDialog.Builder(context)
 
     fun startDialog(){
-        val prgDialogView = LayoutInflater.from(context).inflate(R.layout.progressbar_dialog, null)
+        val prgDialogView  = LayoutInflater.from(context).inflate(R.layout.progressbar_dialog, null)
             prgDialog.setView(prgDialogView)
              prgDialog.setCancelable(false)
 
