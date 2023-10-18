@@ -34,7 +34,7 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
     inner class LibraryViewHolder(private var binding: RewLibraryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val title = binding.pdfItmTitle
-        val description = binding.pdfItmDesc
+
         val btnMore = binding.pdfItmMore
         val progressbar = binding.progressBar2
 
@@ -82,7 +82,7 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()) //time HH:mm:ss
 
         val uzTime = sdf.format(calendar.time)
-        holder.description.text = uzTime
+
         holder.title.text = title
 
 
@@ -164,16 +164,11 @@ class LibraryAdapter(var mLibraryList: List<LibraryData>, private val c: Context
                         .enableSwipe(false)
                         .onError { t ->
                             // Xato yuzaga kelganda ishlatiladigan kod
-                            t.printStackTrace() // Xato haqida ma'lumotni ko'rish uchun
-                            Log.e("onError", "PDF onError: ${t.printStackTrace()}")
-                            println("PDF xatoligi onError: ${t.message}")
-                            progressBar.visibility = View.INVISIBLE
-                        }
-                        .onPageError { page, t ->
-                            // PDF sahifalardan biri yuklanmaganida ishlatiladigan kod
-                            t.printStackTrace() // Xato haqida ma'lumotni ko'rish uchun
-                            Log.e("onPageError", "PDF onPageError: ${t.message}")
-                            println("PDF xatoligi onPageError: ${t.message}")
+                            t.print
+
+
+
+                            rror: ${t.message}")
                             progressBar.visibility = View.INVISIBLE
                         }
                         .onLoad { nbPages ->

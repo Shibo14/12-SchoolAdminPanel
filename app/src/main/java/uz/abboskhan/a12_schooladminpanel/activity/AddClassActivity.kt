@@ -17,6 +17,7 @@ import uz.abboskhan.a12_schooladminpanel.adapter.ClassAdapter
 import uz.abboskhan.a12_schooladminpanel.model.ClassData
 import uz.abboskhan.a12_schooladminpanel.R
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityAddClassBinding
+import uz.abboskhan.a12_schooladminpanel.model.Progressbar
 
 class AddClassActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddClassBinding
@@ -26,14 +27,16 @@ class AddClassActivity : AppCompatActivity() {
     private lateinit var dialogText: EditText
     private var classData: String = ""
     private val firebaseData = FirebaseDatabase.getInstance().getReference("Class")
+    private lateinit var myPrg:Progressbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddClassBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        getDataRew()
-              binding.prgClass.visibility = View.VISIBLE
 
+        myPrg = Progressbar(this)
+        myPrg.startDialog()
+        getDataRew()
 
                binding.addClass.setOnClickListener {
                    dialogData()
@@ -54,46 +57,33 @@ class AddClassActivity : AppCompatActivity() {
 
 
     }
-//    private fun btnGone(btn: FloatingActionButton): Boolean {
-//        firebaseData.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//
-//                if (dataSnapshot.exists()) {
-//                    btn.visibility = View.VISIBLE
-//                } else {
-//                  btn.visibility = View.GONE
-//                }
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//
-//            }
-//        })
-//        return true
-//    }
+
 
     private fun getDataRew() {
         mList = ArrayList()
-
         firebaseData.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 mList.clear()
+
                 for (i in snapshot.children) {
                     val data = i.getValue(ClassData::class.java)
                     mList.add(data!!)
 
                 }
 
-                binding.prgClass.visibility = View.GONE
+                myPrg.dismissProgressBar()
 
                 classAdapter = ClassAdapter(mList, this@AddClassActivity)
                 binding.rewClass.setHasFixedSize(true)
                 binding.rewClass.layoutManager = LinearLayoutManager(this@AddClassActivity)
                 binding.rewClass.adapter = classAdapter
 
+
             }
 
             override fun onCancelled(error: DatabaseError) {
+                myPrg.dismissProgressBar()
 
             }
         })
