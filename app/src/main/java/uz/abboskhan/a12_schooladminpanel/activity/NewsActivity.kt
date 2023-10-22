@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -32,10 +33,22 @@ class NewsActivity : AppCompatActivity() {
         mList = ArrayList()
         getNewsRewData()
 
+
         binding.addNewsFloBtn.setOnClickListener {
             startActivity(Intent(this, AddNewsActivity::class.java))
 
         }
+
+        binding.rewNews.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && binding.addNewsFloBtn.isShown) {
+                    binding.addNewsFloBtn.hide()
+                } else if (dy < 0 && ! binding.addNewsFloBtn.isShown) {
+                    binding.addNewsFloBtn.show()
+                }
+            }
+        })
 
     }
 

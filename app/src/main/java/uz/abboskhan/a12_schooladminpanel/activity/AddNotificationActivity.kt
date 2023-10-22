@@ -30,16 +30,16 @@ class AddNotificationActivity : AppCompatActivity() {
     }
 
     private fun getNotificationData() {
-        binding.prgAddNotification.visibility = View.VISIBLE
+
         val title = binding.notificationTextTitle.text.toString()
         val description = binding.notificationTextDesc.text.toString()
-   if (TextUtils.isEmpty(title)){
-       binding.notificationTextTitle.error = "Bildirishnoma Qo'shilmadi"
-   }else if (TextUtils.isEmpty(description)){
-       binding.notificationTextDesc.error = "Bildirishnoma tavsifi kiritilmadi"
-   }else{
-        getNotificationDataFireBase(title,description)
-   }
+        if (TextUtils.isEmpty(title)) {
+            binding.notificationTextTitle.error = "Bildirishnoma Qo'shilmadi"
+        } else if (TextUtils.isEmpty(description)) {
+            binding.notificationTextDesc.error = "Bildirishnoma tavsifi kiritilmadi"
+        } else {
+            getNotificationDataFireBase(title, description)
+        }
 
 
     }
@@ -47,7 +47,7 @@ class AddNotificationActivity : AppCompatActivity() {
     private fun getNotificationDataFireBase(title: String, description: String) {
 
         val timestamp = System.currentTimeMillis()
-   val myPrg = Progressbar(this)
+        val myPrg = Progressbar(this)
         myPrg.startDialog()
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap["id"] = "$timestamp"
@@ -59,8 +59,9 @@ class AddNotificationActivity : AppCompatActivity() {
         databaseReference.child("$timestamp").setValue(hashMap)
             .addOnSuccessListener {
 
-                onBackPressed()
+
                 myPrg.dismissProgressBar()
+                onBackPressed()
                 Toast.makeText(this, "getNotificationData success", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
                 myPrg.dismissProgressBar()

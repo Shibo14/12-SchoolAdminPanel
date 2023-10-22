@@ -26,28 +26,9 @@
 
                 android:src="@drawable/newspaper" />
 
-            <TextView
-                android:textColor="#3E425A"
-                android:id="@+id/newsDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:gravity="center"
-                android:shadowDx="10"
-                android:shadowDy="10"
-                android:text="@string/app_name"
-                android:textSize="18sp"
-                android:textStyle="bold">
 
-            </TextView>
 
-            <Toolbar
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize">
 
-            </Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -61,19 +42,38 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:textColor="@color/textColorWhite"
+                android:id="@+id/newsDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:shadowDx="10"
+                android:shadowDy="10"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <TextView
                 android:id="@+id/newsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="Title"
+                android:textColor="@color/textColorWhite"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/newsDate">
 
             </TextView>
 
@@ -85,13 +85,25 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:lineSpacingExtra="4sp"
+                android:lineSpacingExtra="8sp"
                 android:padding="16dp"
                 android:text="@string/lorem"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/newsTitle" />
+
+            <TextView
+                android:id="@+id/newsTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="TextView"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -34,7 +34,7 @@
                 android:layout_marginTop="16dp"
                 android:text="12-School"
                 android:textColor="#FFF"
-                android:textSize="24sp"
+                android:textSize="34sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,14 +46,15 @@
                 android:layout_marginStart="16dp"
                 android:text="Admin Panel"
                 android:textColor="#FFF"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-            <androidx.cardview.widget.CardView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/notiInfo"
                 android:layout_width="50dp"
+                android:background="@drawable/note_bc"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -66,23 +67,18 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/notifications_none_24">
+                    android:src="@drawable/notifications_none_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5">
 
                 </ImageView>
-            </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <SearchView
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/search_bc"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -168,7 +164,7 @@
                         android:id="@+id/classInfo"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:layout_margin="5dp"
+
                         app:cardBackgroundColor="@color/purple_500"
                         app:cardCornerRadius="17dp">
 

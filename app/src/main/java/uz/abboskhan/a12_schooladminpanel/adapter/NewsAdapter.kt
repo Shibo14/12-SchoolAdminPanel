@@ -24,13 +24,15 @@ class NewsAdapter(private val mList: ArrayList<NewsData>, val context: Context) 
     inner class NewsViewHolder(private var binding: RewNewsBinding) :
         RecyclerView.ViewHolder(binding.root) {
    val btnDelete = binding.newsDelete
+        val newsDate = binding.timeNews
+        val newsTime = binding.textDate
         fun bing(data: NewsData) {
 
             Picasso.get().load(data.imageUrl).into(binding.itemImg)
             // binding.itmNewsDesc.setTrimExpandedText(" :more")
             binding.itemNewstxt.text = data.title
             binding.itmNewsDesc.text = data.description
-
+           binding.itmNewsDesc.setTrimExpandedText("")
 
         }
     }
@@ -53,17 +55,24 @@ class NewsAdapter(private val mList: ArrayList<NewsData>, val context: Context) 
         val uzbekistanTimeZone = TimeZone.getTimeZone("Asia/Tashkent")
 
 
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        sdf.timeZone = uzbekistanTimeZone
+        val getNewsDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val getNewsTime = SimpleDateFormat("HH : mm", Locale.getDefault())
+
+        getNewsDate.timeZone = uzbekistanTimeZone
 
 
-        val newsTime = sdf.format(Date(time))
+        val newsDate = getNewsDate.format(Date(time))
+        val newsTime = getNewsTime.format(Date(time))
+        holder.newsDate.text = newsDate
+        holder.newsTime.text = newsTime
+
 
         holder.itemView.setOnClickListener {
             val i  = Intent(context, NewsInfo::class.java)
             i.putExtra("id",id)
             i.putExtra("title",title)
             i.putExtra("description",description)
+            i.putExtra("date",newsDate)
             i.putExtra("time",newsTime)
             i.putExtra("image",image)
             context.startActivity(i)

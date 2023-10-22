@@ -17,9 +17,13 @@ class NewsInfo : AppCompatActivity() {
      val title = intent.getStringExtra("title")
      val description = intent.getStringExtra("description")
      val time = intent.getStringExtra("time")
+     val date = intent.getStringExtra("date")
+
      val image = intent.getStringExtra("image")
 
-        binding.newsDate.text = time
+        binding.newsDate.text = date
+        binding.newsTime.text = time
+
         binding.newsTitle.text = title
         binding.newsDesc.text = description
         Picasso.get().load(image).into(binding.newsImg)

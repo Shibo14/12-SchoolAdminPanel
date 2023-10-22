@@ -3,12 +3,13 @@ package uz.abboskhan.a12_schooladminpanel.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -27,15 +28,14 @@ class AddClassActivity : AppCompatActivity() {
     private lateinit var dialogText: EditText
     private var classData: String = ""
     private val firebaseData = FirebaseDatabase.getInstance().getReference("Class")
-    private lateinit var myPrg:Progressbar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddClassBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        myPrg = Progressbar(this)
-        myPrg.startDialog()
+         binding.prgAddClass.visibility = View.VISIBLE
         getDataRew()
 
                binding.addClass.setOnClickListener {
@@ -61,6 +61,7 @@ class AddClassActivity : AppCompatActivity() {
 
     private fun getDataRew() {
         mList = ArrayList()
+
         firebaseData.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -71,8 +72,9 @@ class AddClassActivity : AppCompatActivity() {
                     mList.add(data!!)
 
                 }
+                binding.prgAddClass.visibility = View.GONE
 
-                myPrg.dismissProgressBar()
+
 
                 classAdapter = ClassAdapter(mList, this@AddClassActivity)
                 binding.rewClass.setHasFixedSize(true)
@@ -83,7 +85,8 @@ class AddClassActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                myPrg.dismissProgressBar()
+                binding.prgAddClass.visibility = View.GONE
+
 
             }
         })

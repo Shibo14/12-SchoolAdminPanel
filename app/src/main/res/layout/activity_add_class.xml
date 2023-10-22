@@ -7,7 +7,6 @@
     tools:context=".activity.AddClassActivity">
 
 
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
@@ -19,33 +18,32 @@
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="@color/purple_700"
             android:fitsSystemWindows="true"
-            app:title="Sinflar"
-            app:titleCollapseMode="scale"
-            app:expandedTitleTextAppearance="@style/Theme.Collapsingtoolbar"
             app:collapsedTitleTextAppearance="@style/Theme.Collapsingtoolbar"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+            app:contentScrim="@color/purple_700"
+            app:expandedTitleTextAppearance="@style/Theme.Collapsingtoolbar"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            app:title="Sinflar"
+            app:titleCollapseMode="scale">
 
 
             <ImageView
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-
                 android:layout_width="320dp"
                 android:layout_height="200dp"
+
                 android:layout_gravity="center|end"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
                 android:src="@drawable/classtech"
                 app:layout_collapseMode="parallax" />
 
             <androidx.appcompat.widget.Toolbar
-                app:popupTheme="@style/Theme.AppCompat.Light"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                >
+                app:popupTheme="@style/Theme.AppCompat.Light">
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -78,5 +76,20 @@
         app:layout_anchorGravity="end|bottom"
         app:srcCompat="@drawable/baseline_add_24" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/prgAddClass"
+        android:visibility="gone"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/prganim" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
