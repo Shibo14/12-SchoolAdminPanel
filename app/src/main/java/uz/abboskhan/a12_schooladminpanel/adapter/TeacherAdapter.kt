@@ -3,6 +3,7 @@ package uz.abboskhan.a12_schooladminpanel.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import uz.abboskhan.a12_schooladminpanel.model.TeacherData
@@ -17,7 +18,9 @@ class TeacherAdapter(private val mList: List<TeacherData>, val context: Context)
 
             Picasso.get().load(data.imageUrl).into(binding.itemImg)
 
-            binding.itemTxt.text = data.techName
+            binding.itemFaml.text = data.techSuraName
+            binding.itmName.text = data.techName
+            binding.techFan.text = data.techScience
 
 
         }

@@ -13,6 +13,10 @@
     <item name="android:textColorPrimary">@color/textColorWhite</item>
     <item name="android:textStyle">bold</item>
 </style>
+    <style name="circleImageView" parent="Base.Theme._12schoolAdminPanel">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
     
     <style name="Theme._12schoolAdminPanel" parent="Base.Theme._12schoolAdminPanel" />
 </resources>
