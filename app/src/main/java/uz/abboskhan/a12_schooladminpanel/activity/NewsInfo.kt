@@ -22,7 +22,7 @@ class NewsInfo : AppCompatActivity() {
      val image = intent.getStringExtra("image")
 
         binding.newsDate.text = date
-        binding.newsTime.text = time
+     //   binding.newsTime.text = time
 
         binding.newsTitle.text = title
         binding.newsDesc.text = description

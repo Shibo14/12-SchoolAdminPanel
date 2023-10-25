@@ -67,7 +67,7 @@ class AddRatingActivity : AppCompatActivity() {
         else if (imageUri==null){
             Toast.makeText(this, "Rasm tanlanmagan", Toast.LENGTH_SHORT).show()
         }else{
-            getRatingData(studentSuraName,studentName,studentAge,studentScience,studentPhoneNumber)
+            getRatingData(studentSuraName,studentName,studentAge,studentPhoneNumber,studentScience)
         }
 
 

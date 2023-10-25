@@ -44,7 +44,8 @@ class AddTechActivity : AppCompatActivity() {
         val techAge = binding.addTechAge.text.toString()
         val techScience = binding.addTechScience.text.toString()
         val techPhoneNumber = binding.addTechPhoneNumber.text.toString()
-
+        val timestamp = System.currentTimeMillis()
+        val id = "$timestamp"
         if (TextUtils.isEmpty(techSuraName)) {
             binding.addTechNameLas.error = "Familyani kiriting"
         } else if (TextUtils.isEmpty(techName)) {
@@ -58,13 +59,15 @@ class AddTechActivity : AppCompatActivity() {
         } else if (imageUri == null) {
             Toast.makeText(this, "Rasm tanlanmagan", Toast.LENGTH_SHORT).show()
         } else {
-            getTeacherFirebaseData(techSuraName, techName, techAge, techScience, techPhoneNumber)
+            getTeacherFirebaseData(id,timestamp,techSuraName, techName,techAge,  techScience, techPhoneNumber)
         }
 
 
     }
 
     private fun getTeacherFirebaseData(
+        id: String,
+        timestamp:Long,
         techSuraName: String,
         techName: String,
         techAge: String,
@@ -73,8 +76,7 @@ class AddTechActivity : AppCompatActivity() {
     ) {
         val myPrg = Progressbar(this)
         myPrg.startDialog()
-        val timestamp = System.currentTimeMillis()
-        val id = "$timestamp"
+
         val imageRef = storageReference.child("${System.currentTimeMillis()}.jpg")
 
         imageUri?.let {
@@ -131,24 +133,36 @@ class AddTechActivity : AppCompatActivity() {
         techScience: String,
         techPhoneNumber: String
     ) {
-        val key = databaseReference.push().key
+        val hashMap = HashMap<String, Any>()
+        hashMap["id"] = "$timestamp"
+        hashMap["techName"] = "$techName"
+        hashMap["techSuraName"] = "$techSuraName"
+        hashMap["imageUrl"] = "$imageUrl"
+        hashMap["techAge"] = "$techAge"
+        hashMap["techScience"] = "$techScience"
+        hashMap["techPhoneNumber"] = "$techPhoneNumber"
 
-        if (key != null) {
-            val data =
-                TeacherData(
-                    id,
-                    timestamp,
-                    imageUrl,
-                    techName,
-                    techSuraName,
-                    techAge,
-                    techScience,
-                    techPhoneNumber
-                )
-            databaseReference.child(key).setValue(data)
-        }
+        hashMap["timestamp"] = timestamp
+
+
+
+        databaseReference.child("$timestamp")
+            .setValue(hashMap)
+            .addOnSuccessListener {
+
+                Toast.makeText(this, "Malumotlar qo'shildi.", Toast.LENGTH_SHORT).show()
+
+            }
+            .addOnFailureListener {
+
+                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
+
+
 
 
     }
 
-}

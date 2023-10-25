@@ -5,18 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/notDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/noteTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="@color/white"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintTop_toBottomOf="@+id/notDate">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +49,7 @@
             android:layout_height="match_parent">
 
 
-            <com.borjabravo.readmoretextview.ReadMoreTextView
+            <TextView
                 android:id="@+id/itm_notiDesc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -33,14 +58,13 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:pointerIcon="copy"
-                android:textSize="20sp"
-                app:colorClickableText="#131313"
+                android:text="This text is placeholder text to give you an idea of how this color looks when used as a font color on a black background. The following sentence uses every English character: The quick brown fox jumps over the lazy dog."
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/item_NotiTxt"
-                app:trimLength="50"
+
                 app:trimMode="trimModeLine" />
 
             <TextView
@@ -50,6 +74,8 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,6 +90,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/baseline_delete_24" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

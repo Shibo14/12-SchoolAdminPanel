@@ -9,6 +9,7 @@ class RatingData{
      var studentAge: String = ""
      var studentScience: String = ""
      var studentClassNumber: String = ""
+    var isExpandable: Boolean = false
 
 
     constructor(
@@ -19,7 +20,8 @@ class RatingData{
         studentSuraName: String,
         studentAge: String,
         studentScience: String,
-        studentClassNumber: String
+        studentClassNumber: String,
+        isExpandable: Boolean
     ) {
         this.id = id
         this.timestamp = timestamp
@@ -29,6 +31,7 @@ class RatingData{
         this.studentAge = studentAge
         this.studentScience = studentScience
         this.studentClassNumber = studentClassNumber
+        this.isExpandable = isExpandable
     }
 
     constructor()

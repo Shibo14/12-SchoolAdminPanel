@@ -6,4 +6,198 @@
     android:layout_height="match_parent"
     tools:context=".activity.TeacherInfo">
 
+    <ImageView
+        android:id="@+id/techInfoImg"
+        android:layout_width="0dp"
+        android:scaleType="centerCrop"
+        android:layout_height="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/techInfoImg">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <TableLayout
+                        android:id="@+id/itm_tab"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+
+                        android:stretchColumns="*"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.5">
+
+
+                        <TableRow
+                            android:background="@color/silver"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Familiyasi"
+                                android:textAlignment="center"
+                                android:textColor="@color/subtext"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/techSur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Arsène"
+                                android:textAlignment="center"
+                                android:textColor="@color/subtext"
+                                android:textStyle="bold" />
+
+
+                        </TableRow>
+
+                        <TableRow
+                            android:background="@color/silver"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Ismi"
+                                android:textAlignment="center"
+                                android:textColor="@color/subtext"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/techName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Wenger"
+                                android:textAlignment="center"
+                                android:textColor="@color/subtext"
+                                android:textStyle="bold" />
+
+
+                        </TableRow>
+
+                        <TableRow
+                            android:background="@color/silver"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Yoshi"
+                                android:textAlignment="center"
+                                android:textColor="@color/subtext"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/techAge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="47"
+                                android:textAlignment="center"
+                                android:textColor="@color/subtext"
+                                android:textStyle="bold" />
+                        </TableRow>
+
+                        <TableRow
+                            android:background="@color/silver"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Fan"
+                                android:textAlignment="center"
+                                android:textColor="@color/subtext"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/techFan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Sport"
+                                android:textAlignment="center"
+                                android:textColor="@color/subtext"
+                                android:textStyle="bold" />
+
+
+                        </TableRow>
+
+                        <TableRow
+                            android:background="@color/silver"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Telefon raqami"
+                                android:textAlignment="center"
+                                android:textColor="@color/subtext"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/techPhone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="+998-93-233-17-18"
+                                android:textAlignment="center"
+                                android:textColor="@color/subtext"
+                                android:textStyle="bold" />
+
+
+                        </TableRow>
+
+
+                    </TableLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

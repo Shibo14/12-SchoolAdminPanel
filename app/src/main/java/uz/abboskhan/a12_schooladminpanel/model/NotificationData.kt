@@ -9,7 +9,6 @@ class NotificationData {
     constructor(id: String, timestamp: Long,  title: String, description: String) {
         this.id = id
         this.timestamp = timestamp
-
         this.title = title
         this.description = description
     }

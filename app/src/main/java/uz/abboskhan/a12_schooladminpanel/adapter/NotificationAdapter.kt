@@ -25,7 +25,9 @@ class NotificationAdapter(private val mList: List<NotificationData>, val context
 
     inner class NotificationViewHolder(private var binding: RewNotificationBinding) :
         RecyclerView.ViewHolder(binding.root) {
-   val btnDelete = binding.notiDelete
+        val btnDelete = binding.notiDelete
+        val noteData = binding.notDate
+        val noteTime = binding.noteTime
         fun bing(data: NotificationData) {
 
 
@@ -38,29 +40,49 @@ class NotificationAdapter(private val mList: List<NotificationData>, val context
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
-        val binding = RewNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            RewNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NotificationViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
         val currentItem = mList[position]
-       val id = currentItem.id
-       val title = currentItem.title
-       val description = currentItem.description
-       val time = currentItem.timestamp
+        val id = currentItem.id
+        val title = currentItem.title
+        val description = currentItem.description
+        val time = currentItem.timestamp
 
         holder.bing(currentItem)
 
+        /*
+          val uzbekistanTimeZone = TimeZone.getTimeZone("Asia/Tashkent")
+
+
+        val getNewsDate = SimpleDateFormat("EEEE d-MMMM-yyyy", Locale.getDefault())
+        val getNewsTime = SimpleDateFormat("EEEE d-MMMM-yyyy", Locale.getDefault())
+
+        getNewsDate.timeZone = uzbekistanTimeZone
+
+
+        val newsDate = getNewsDate.format(Date(time))
+        val newsTime = getNewsTime.format(Date(time))
+         */
 
         val uzbekistanTimeZone = TimeZone.getTimeZone("Asia/Tashkent")
 
 
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        sdf.timeZone = uzbekistanTimeZone
+        val sdf1 = SimpleDateFormat("EEEE d-MMMM-yyyy", Locale.getDefault())
+        val sdf2 = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+        sdf1.timeZone = uzbekistanTimeZone
+        sdf2.timeZone = uzbekistanTimeZone
 
 
-        val newsTime = sdf.format(Date(time))
+        val newsDate = sdf1.format(Date(time))
+        val newsTime = sdf2.format(Date(time))
 
+        holder.noteData.text = newsDate
+        holder.noteTime.text = newsTime
 
 
         holder.btnDelete.setOnClickListener {
@@ -82,27 +104,28 @@ class NotificationAdapter(private val mList: List<NotificationData>, val context
 
 
     }
+
     override fun getItemCount(): Int {
         return mList.size
     }
 
     private fun newsDelete(id: String) {
 
-                    val firebaseData = FirebaseDatabase.getInstance().getReference("NotificationData")
+        val firebaseData = FirebaseDatabase.getInstance().getReference("NotificationData")
 
-                    firebaseData.child(id)
-                        .removeValue()
-                        .addOnSuccessListener {
-                            Toast.makeText(context, "success delete", Toast.LENGTH_SHORT).show()
+        firebaseData.child(id)
+            .removeValue()
+            .addOnSuccessListener {
+                Toast.makeText(context, "success delete", Toast.LENGTH_SHORT).show()
 
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(context, "delete error", Toast.LENGTH_SHORT).show()
-                        }
-
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "delete error", Toast.LENGTH_SHORT).show()
             }
 
     }
+
+}
 
 
 

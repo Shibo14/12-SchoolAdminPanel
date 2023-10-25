@@ -77,12 +77,12 @@
                         android:id="@+id/notification_textDesc"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
-                        android:lines="10"
+                        android:lines="50"
                         android:minLines="5"
                         android:gravity="top|left"
-                        android:maxLines="15"
+                        android:maxLines="50"
                         android:hint="Bildirishnoma tavsifi"
-                        android:inputType="textEmailAddress"
+                        android:inputType="text|textMultiLine"
                         android:textSize="18sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
