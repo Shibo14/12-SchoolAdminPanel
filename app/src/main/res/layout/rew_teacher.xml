@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="10dp"
+
     android:layout_marginBottom="15dp"
     android:gravity="center_vertical"
     android:padding="10dp">
@@ -29,19 +29,27 @@
 
         </View>
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/itemImg"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardItemImg"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/teacher"
+            android:layout_marginStart="8dp"
+            app:cardCornerRadius="100dp"
+            app:cardPreventCornerOverlap="true"
             app:layout_constraintBottom_toBottomOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/view"
-            app:shapeAppearanceOverlay="@style/circleImageView"
-            app:strokeWidth="1dp" />
+            app:layout_constraintTop_toTopOf="@+id/view">
+            <ImageView
+                android:id="@+id/itemImg"
+                android:scaleType="centerCrop"
+                android:src="@drawable/teacher"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ImageView>
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/item_faml"
@@ -54,7 +62,7 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/itemImg"
+            app:layout_constraintStart_toEndOf="@+id/cardItemImg"
             app:layout_constraintTop_toTopOf="@+id/view" />
 
         <TextView
@@ -66,25 +74,24 @@
             android:text="Wenger"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/item_faml"
-            app:layout_constraintStart_toEndOf="@+id/itemImg"
+            app:layout_constraintStart_toEndOf="@+id/cardItemImg"
             app:layout_constraintTop_toBottomOf="@+id/item_faml" />
 
         <View
             android:id="@+id/view2"
             android:layout_width="30dp"
             android:layout_height="1dp"
+            android:layout_marginStart="24dp"
             android:background="#ECC03D"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@+id/itm_name"
-            app:layout_constraintStart_toStartOf="@+id/itm_name"
+            app:layout_constraintStart_toEndOf="@+id/cardItemImg"
             app:layout_constraintTop_toBottomOf="@+id/itm_name" />
 
         <TextView
             android:id="@+id/techFan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/text_bc"
             android:fontFamily="@font/baloo"
@@ -93,7 +100,7 @@
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintStart_toEndOf="@+id/itemImg" />
+            app:layout_constraintStart_toEndOf="@+id/cardItemImg" />
 
         <ImageView
             android:id="@+id/deleteTech"

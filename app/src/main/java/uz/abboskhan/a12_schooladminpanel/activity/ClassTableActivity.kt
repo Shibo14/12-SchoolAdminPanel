@@ -64,9 +64,9 @@ class ClassTableActivity : AppCompatActivity() {
     }
 
     private fun loadDataTable() {
-        val myProcess = Progressbar(this)
-        myProcess.startDialog()
+
         mTableList = ArrayList()
+        binding.prgClassTable.visibility = View.VISIBLE
         firebaseData.orderByChild("classId").equalTo(classId)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -81,13 +81,15 @@ class ClassTableActivity : AppCompatActivity() {
 
 
                     }
-                    myProcess.dismissProgressBar()
+                    binding.prgClassTable.visibility = View.GONE
+
                     myAdapter = TableAdapter(mTableList, this@ClassTableActivity)
                     binding.rewClassTable.adapter = myAdapter
 
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+                    binding.prgClassTable.visibility = View.GONE
                     Toast.makeText(this@ClassTableActivity, "error", Toast.LENGTH_SHORT).show()
                 }
             })

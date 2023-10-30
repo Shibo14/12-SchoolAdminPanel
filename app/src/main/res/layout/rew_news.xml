@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
+
     android:layout_margin="10dp"
     android:clickable="true"
 
@@ -12,6 +14,7 @@
     app:cardElevation="4dp">
 
     <LinearLayout
+        android:background="@color/lingSilver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

@@ -2,25 +2,20 @@ package uz.abboskhan.a12_schooladminpanel.adapter
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.squareup.picasso.Picasso
-import uz.abboskhan.a12_schooladminpanel.activity.NewsInfo
-import uz.abboskhan.a12_schooladminpanel.databinding.RewNewsBinding
 import uz.abboskhan.a12_schooladminpanel.databinding.RewNotificationBinding
-import uz.abboskhan.a12_schooladminpanel.model.NewsData
 import uz.abboskhan.a12_schooladminpanel.model.NotificationData
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-class NotificationAdapter(private val mList: List<NotificationData>, val context: Context) :
+
+class NotificationAdapter(private var mList: List<NotificationData>, val context: Context) :
     RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
     inner class NotificationViewHolder(private var binding: RewNotificationBinding) :
@@ -37,6 +32,11 @@ class NotificationAdapter(private val mList: List<NotificationData>, val context
 
 
         }
+    }
+
+    fun searchDataList(searchList: ArrayList<NotificationData>) {
+        mList = searchList
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {

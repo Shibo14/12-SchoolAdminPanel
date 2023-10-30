@@ -218,7 +218,6 @@
                         android:id="@+id/news"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:layout_margin="5dp"
                         app:cardBackgroundColor="@color/purple_500"
                         app:cardCornerRadius="17dp">
 

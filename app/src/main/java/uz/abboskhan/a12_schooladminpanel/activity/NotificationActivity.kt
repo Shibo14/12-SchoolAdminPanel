@@ -1,21 +1,21 @@
 package uz.abboskhan.a12_schooladminpanel.activity
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.SearchView.OnQueryTextListener
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import uz.abboskhan.a12_schooladminpanel.R
 import uz.abboskhan.a12_schooladminpanel.adapter.NotificationAdapter
-import uz.abboskhan.a12_schooladminpanel.adapter.TeacherAdapter
 import uz.abboskhan.a12_schooladminpanel.databinding.ActivityNotificationBinding
-import uz.abboskhan.a12_schooladminpanel.databinding.ActivityTeacherBinding
 import uz.abboskhan.a12_schooladminpanel.model.NotificationData
-import uz.abboskhan.a12_schooladminpanel.model.TeacherData
+import java.util.Locale
+
 
 class NotificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationBinding
@@ -26,6 +26,22 @@ class NotificationActivity : AppCompatActivity() {
         binding = ActivityNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         getNotiData()
+        binding.search.clearFocus()
+
+
+
+
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                searchList(newText)
+                return true
+            }
+        })
+
     }
 
     private fun getNotiData() {
@@ -54,6 +70,17 @@ class NotificationActivity : AppCompatActivity() {
 
             }
         })
+    }
+    fun searchList(text: String) {
+        val searchList: ArrayList<NotificationData> = ArrayList()
+        for (dataClass in mList) {
+            if (dataClass.title.toLowerCase()
+                    .contains(text.lowercase(Locale.getDefault()))
+            ) {
+                searchList.add(dataClass)
+            }
+        }
+        myAdapter.searchDataList(searchList)
     }
 
 
